@@ -11,25 +11,28 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 @Autonomous(name = "Signal Sleeve Test")
 public class VisionTest extends LinearOpMode {
 
-    SleeveDetection sleeveDetection;
-    OpenCvCamera camera;
+    private PixelDetection pixelDetection;
+    private OpenCvCamera camera;
 
     // Name of the Webcam to be set in the config
-    String webcamName = "Webcam 1";
+    private String webcamName = "Webcam 1";
+
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
-        sleeveDetection = new SleeveDetection();
-        camera.setPipeline(sleeveDetection);
+        pixelDetection = new PixelDetection();
+        camera.setPipeline(pixelDetection);
+
 
         camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener()
         {
             @Override
             public void onOpened()
             {
-                camera.startStreaming(320,240, OpenCvCameraRotation.SIDEWAYS_LEFT);
+                camera.startStreaming(432,240, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -39,10 +42,11 @@ public class VisionTest extends LinearOpMode {
             }
         });
 
+
         while (!isStarted()) {
-            telemetry.addData("YCM: ", sleeveDetection.getYelPercent() + " " +
-                    sleeveDetection.getCyaPercent() + " " + sleeveDetection.getMagPercent());
-            telemetry.addData("ROTATION1: ", sleeveDetection.getPosition());
+            telemetry.addData("White percent of LCR mats:", pixelDetection.getLeftWhitePercent() + " "
+                + pixelDetection.getCenterWhitePercent() + " " + pixelDetection.getRightWhitePercent());
+            telemetry.addData("ROTATION1: ", pixelDetection.getPosition());
             telemetry.update();
         }
 
