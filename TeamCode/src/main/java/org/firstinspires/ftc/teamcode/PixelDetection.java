@@ -16,7 +16,7 @@ import java.util.Arrays;
 
 public class PixelDetection extends OpenCvPipeline {
 
-
+    Boolean blue = true;
     public enum BackdropPosition {
         LEFT,
         CENTER,
@@ -25,9 +25,9 @@ public class PixelDetection extends OpenCvPipeline {
 
 
     // TODO: adjust points
-    private static Point LEFT_MAT_TOPLEFT_ANCHOR_POINT = new Point(350, 0);
+    private static Point LEFT_MAT_TOPLEFT_ANCHOR_POINT = new Point(40, 0);
     private static Point CENTER_MAT_TOPLEFT_ANCHOR_POINT = new Point(200, 0);
-    private static Point RIGHT_MAT_TOPLEFT_ANCHOR_POINT = new Point(40, 0);
+    private static Point RIGHT_MAT_TOPLEFT_ANCHOR_POINT = new Point(350, 0);
 
     // Width and height for the bounding box
     // TODO: change size
@@ -38,12 +38,13 @@ public class PixelDetection extends OpenCvPipeline {
     private static final Scalar
             upper_cyan_bounds    = new Scalar(170,213,251,255),
             lower_cyan_bounds    = new Scalar(44,77,152,255),
-            lower_magenta_bounds = new Scalar(120, 60, 60, 255),
-            upper_magenta_bounds = new Scalar(255, 141, 170, 255);
+            lower_red_bounds = new Scalar(175,49,21, 255),
+            upper_red_bounds = new Scalar(209,87,58, 255);
 
     // Color definitions
     private final Scalar WHITE = new Scalar(255, 255, 255);
     private final Scalar BLUE = new Scalar(180, 230, 255);
+    private final Scalar RED = new Scalar(255, 100, 100);
     //private final Scalar RED = new Scalar()
 
     private Mat leftMat = new Mat(REGION_WIDTH, REGION_HEIGHT, CvType.CV_16UC4);
@@ -81,9 +82,9 @@ public class PixelDetection extends OpenCvPipeline {
         centerMat = createMatRect(input, centerMat_pointA, centerMat_pointB);
         rightMat = createMatRect(input, rightMat_pointA, rightMat_pointB);
 
-        leftWhitePercent = colorPercent(leftMat, lower_cyan_bounds , upper_cyan_bounds);
-        centerWhitePercent = colorPercent(centerMat, lower_cyan_bounds , upper_cyan_bounds);
-        rightWhitePercent = colorPercent(rightMat, lower_cyan_bounds , upper_cyan_bounds);
+        leftWhitePercent = colorPercent(leftMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
+        centerWhitePercent = colorPercent(centerMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
+        rightWhitePercent = colorPercent(rightMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
 
         double[] whitePercents = new double[] {leftWhitePercent, centerWhitePercent, rightWhitePercent};
         double highestWhitePercent = Arrays.stream(whitePercents).max().getAsDouble();
@@ -111,7 +112,7 @@ public class PixelDetection extends OpenCvPipeline {
                     input,
                     leftMat_pointA,
                     leftMat_pointB,
-                    BLUE,
+                    (blue ? BLUE : RED),
                     2
             );
         }
@@ -129,7 +130,7 @@ public class PixelDetection extends OpenCvPipeline {
                     input,
                     centerMat_pointA,
                     centerMat_pointB,
-                    BLUE,
+                    (blue ? BLUE : RED),
                     2
             );
             Imgproc.rectangle(
@@ -147,7 +148,7 @@ public class PixelDetection extends OpenCvPipeline {
                     input,
                     rightMat_pointA,
                     rightMat_pointB,
-                    BLUE,
+                    (blue ? BLUE : RED),
                     2
             );
             Imgproc.rectangle(
