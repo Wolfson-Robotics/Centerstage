@@ -39,11 +39,12 @@ public class DriveJava extends LinearOpMode {
         claw1.setPosition(0.0);
         armServo.setPosition(0.55);
         elbowServo.setPosition(0.7);
-            servoPositions.put("X", new ServoSettings().setArmPos(0.55).setElbowPos(0.3275));
-        servoPositions.put("A", new ServoSettings().setArmPos(0.55).setElbowPos(0.32));
-        servoPositions.put("B", new ServoSettings().setArmPos(0.55).setElbowPos(0.31));
-        servoPositions.put("Y", new ServoSettings().setArmPos(0.55).setElbowPos(0.29));
-        servoPositions.put("dpad_down", new ServoSettings().setArmPos(0.55).setElbowPos(0.27));
+        servoPositions.put("right_bumper", new ServoSettings().setArmPos(0.55).setElbowPos(0.388));
+        servoPositions.put("X", new ServoSettings().setArmPos(0.55).setElbowPos(0.3225));
+        servoPositions.put("A", new ServoSettings().setArmPos(0.55).setElbowPos(0.31));
+        servoPositions.put("B", new ServoSettings().setArmPos(0.55).setElbowPos(0.30));
+        servoPositions.put("Y", new ServoSettings().setArmPos(0.55).setElbowPos(0.28));
+        servoPositions.put("dpad_down", new ServoSettings().setArmPos(0.55).setElbowPos(0.25));
         servoPositions.put("dpad_right", new ServoSettings().setArmPos(0.005).setElbowPos(0.0622));
         servoPositions.put("dpad_up", new ServoSettings().setArmPos(0.4927).setElbowPos(0.5483));
     }
@@ -85,6 +86,10 @@ public class DriveJava extends LinearOpMode {
                 buttonPressed = true;
                 servoSettings = servoPositions.get("dpad_right");
             }
+            else if (isButtonPressed("right_bumper")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("right_bumper");
+            }
             if(gamepad2.right_stick_y != 0 || gamepad2.left_stick_y != 0) buttonPressed = false;
 
             if(!buttonPressed) {
@@ -110,10 +115,10 @@ public class DriveJava extends LinearOpMode {
                 moveServo(armServo, servoSettings.getArmPos(), 20);
                 moveServo(elbowServo, servoSettings.getElbowPos(), 10);
             }
-            if (gamepad2.left_trigger > 0) claw1.setPosition(0.08); //grab claw
+            if (gamepad2.left_trigger > 0) claw1.setPosition(0.12); //grab claw
             if (gamepad2.right_trigger > 0) claw1.setPosition(0.00); //drop
 
-            moveBot(-gamepad1.left_stick_y, gamepad1.right_stick_x, gamepad1.left_stick_x);
+            moveBot(-gamepad1.left_stick_y, (gamepad1.right_stick_x), gamepad1.left_stick_x);
             telemetry.addData("arm Drive pos:", armServo.getPosition());
             telemetry.addData("elbow Drive pos:", elbowServo.getPosition());
             telemetry.update();
@@ -135,6 +140,8 @@ public class DriveJava extends LinearOpMode {
                 return gamepad2.dpad_down;
             case "dpad_right":
                 return gamepad2.dpad_right;
+            case "right_bumper":
+                return gamepad2.right_bumper;
             default:
                 return false;
         }
@@ -155,7 +162,7 @@ public class DriveJava extends LinearOpMode {
     }
 
     private void moveBot(float vertical, float pivot, float horizontal) {
-
+        pivot *= 0.5;
         right_drive1.setPower(powerFactor * (-pivot + (vertical - horizontal)));
         right_drive2.setPower(powerFactor * (-pivot + vertical + horizontal));
         left_drive1.setPower(powerFactor * (pivot + vertical + horizontal));
