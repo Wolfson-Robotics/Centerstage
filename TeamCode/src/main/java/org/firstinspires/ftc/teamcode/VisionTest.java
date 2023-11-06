@@ -44,8 +44,8 @@ public class VisionTest extends LinearOpMode {
 
 
         while (!isStarted()) {
-            telemetry.addData("White percent of LCR mats:", pixelDetection.getLeftWhitePercent() + " "
-                + pixelDetection.getCenterWhitePercent() + " " + pixelDetection.getRightWhitePercent());
+            telemetry.addData("White percent of LCR mats:", pixelDetection.getLeftPercent() + " "
+                + pixelDetection.getCenterPercent() + " " + pixelDetection.getRightPercent());
             telemetry.addData("ROTATION1: ", pixelDetection.getPosition());
             telemetry.update();
         }

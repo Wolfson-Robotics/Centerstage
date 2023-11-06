@@ -16,7 +16,8 @@ import java.util.Arrays;
 
 public class PixelDetection extends OpenCvPipeline {
 
-    Boolean blue = true;
+    public boolean blue = true;
+
     public enum BackdropPosition {
         LEFT,
         CENTER,
@@ -36,8 +37,8 @@ public class PixelDetection extends OpenCvPipeline {
 
     // Lower and upper boundaries for colors
     private static final Scalar
-            upper_cyan_bounds    = new Scalar(170,213,251,255),
-            lower_cyan_bounds    = new Scalar(44,77,152,255),
+            upper_cyan_bounds = new Scalar(64,133,251,255),
+            lower_cyan_bounds = new Scalar(16,43,127,255),
             lower_red_bounds = new Scalar(175,49,21, 255),
             upper_red_bounds = new Scalar(209,87,58, 255);
 
@@ -64,9 +65,9 @@ public class PixelDetection extends OpenCvPipeline {
     private final Point rightMat_pointB = generateMatPointB(RIGHT_MAT_TOPLEFT_ANCHOR_POINT);
 
 
-    private double leftWhitePercent;
-    private double centerWhitePercent;
-    private double rightWhitePercent;
+    private double leftPercent;
+    private double centerPercent;
+    private double rightPercent;
 
     // Running variable storing the parking position
     private volatile BackdropPosition position = BackdropPosition.LEFT;
@@ -82,16 +83,16 @@ public class PixelDetection extends OpenCvPipeline {
         centerMat = createMatRect(input, centerMat_pointA, centerMat_pointB);
         rightMat = createMatRect(input, rightMat_pointA, rightMat_pointB);
 
-        leftWhitePercent = colorPercent(leftMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
-        centerWhitePercent = colorPercent(centerMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
-        rightWhitePercent = colorPercent(rightMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
+        leftPercent = colorPercent(leftMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
+        centerPercent = colorPercent(centerMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
+        rightPercent = colorPercent(rightMat, (blue ? lower_cyan_bounds : lower_red_bounds), (blue ? upper_cyan_bounds : upper_red_bounds));
 
-        double[] whitePercents = new double[] {leftWhitePercent, centerWhitePercent, rightWhitePercent};
+        double[] whitePercents = new double[] {leftPercent, centerPercent, rightPercent};
         double highestWhitePercent = Arrays.stream(whitePercents).max().getAsDouble();
 
 
         // would do switch loop but "case must be constant expression"
-        if (highestWhitePercent == leftWhitePercent)
+        if (highestWhitePercent == leftPercent)
         {
             position = BackdropPosition.LEFT;
             Imgproc.rectangle(
@@ -116,7 +117,7 @@ public class PixelDetection extends OpenCvPipeline {
                     2
             );
         }
-        else if (highestWhitePercent == centerWhitePercent)
+        else if (highestWhitePercent == centerPercent)
         {
             position = BackdropPosition.CENTER;
             Imgproc.rectangle(
@@ -141,7 +142,7 @@ public class PixelDetection extends OpenCvPipeline {
                     2
             );
         }
-        else if (highestWhitePercent == rightWhitePercent)
+        else if (highestWhitePercent == rightPercent)
         {
             position = BackdropPosition.RIGHT;
             Imgproc.rectangle(
@@ -229,14 +230,14 @@ public class PixelDetection extends OpenCvPipeline {
         return position;
     }
 
-    public double getLeftWhitePercent() {
-        return leftWhitePercent;
+    public double getLeftPercent() {
+        return leftPercent;
     }
-    public double getCenterWhitePercent() {
-        return centerWhitePercent;
+    public double getCenterPercent() {
+        return centerPercent;
     }
-    public double getRightWhitePercent() {
-        return rightWhitePercent;
+    public double getRightPercent() {
+        return rightPercent;
     }
 
 
