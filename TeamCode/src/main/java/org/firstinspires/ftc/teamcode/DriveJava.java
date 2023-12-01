@@ -18,9 +18,11 @@ public class DriveJava extends LinearOpMode {
     private DcMotor right_drive2;
     private DcMotor left_drive1;
     private DcMotor left_drive2;
+    private DcMotor lift;
     public Servo claw1;
     public Servo elbowServo;
     public Servo armServo;
+    public Servo plane;
     double powerFactor = 1.25;
     private ServoSettings servoSettings = new ServoSettings();
     private Map<String, ServoSettings> servoPositions = new HashMap<>();
@@ -30,12 +32,15 @@ public class DriveJava extends LinearOpMode {
         right_drive2 = hardwareMap.get(DcMotor.class, "right_drive2");
         left_drive1 = hardwareMap.get(DcMotor.class, "left_drive1");
         left_drive2 = hardwareMap.get(DcMotor.class, "left_drive2");
+        lift = hardwareMap.get(DcMotor.class, "lift");
 
         right_drive1.setDirection(DcMotorSimple.Direction.REVERSE);
         right_drive2.setDirection(DcMotorSimple.Direction.REVERSE);
+        lift.setDirection(DcMotorSimple.Direction.REVERSE);
         claw1 = hardwareMap.get(Servo.class, "claw");
         elbowServo = hardwareMap.get(Servo.class, "elbow");
         armServo = hardwareMap.get(Servo.class, "arm");
+        plane = hardwareMap.get(Servo.class, "plane");
         claw1.setPosition(0.0);
         armServo.setPosition(0.55);
         elbowServo.setPosition(0.7);
@@ -89,6 +94,18 @@ public class DriveJava extends LinearOpMode {
             else if (isButtonPressed("right_bumper")) {
                 buttonPressed = true;
                 servoSettings = servoPositions.get("right_bumper");
+            } else if (gamepad1.y) {
+                lift.setPower(-.9);
+                sleep(100);
+                lift.setPower(0);
+            } else if (gamepad1.a) {
+                lift.setPower(.9);
+                sleep(100);
+                lift.setPower(0);
+            } else if (gamepad1.b) {
+                plane.setPosition(0.6);
+                sleep(2000);
+                plane.setPosition(0.0);
             }
             if(gamepad2.right_stick_y != 0 || gamepad2.left_stick_y != 0) buttonPressed = false;
 
