@@ -266,7 +266,7 @@ public class AutoJava extends LinearOpMode {
         right_drive2.setPower(powerFactor * (-pivot));
         left_drive1.setPower(powerFactor * (pivot));
         left_drive2.setPower(powerFactor * (pivot));
-        motorTics = left_drive1.getCurrentPosition() + (int) ((distIN * intCon)* pivot);
+        motorTics = left_drive1.getCurrentPosition() + (int) Math.round((distIN * intCon)* pivot);
         if(pivot == 1) {
             while ((left_drive1.getCurrentPosition() < motorTics) && opModeIsActive()) {
                 idle();
