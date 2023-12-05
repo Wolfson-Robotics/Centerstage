@@ -254,7 +254,40 @@ public class AutoJava extends LinearOpMode {
         left_drive2.setPower(0);
 
     }
+    public void moveBotExact(double motorTics, float vertical, float pivot, float horizontal) {
 
+        // 23 motor tics = 1 IN
+
+        int posNeg = (vertical >= 0) ? 1 : -1;
+
+        right_drive1.setPower(powerFactor * (-pivot + (vertical - horizontal)));
+        right_drive2.setPower(powerFactor * (-pivot + vertical + horizontal));
+        left_drive1.setPower(powerFactor * (pivot + vertical + horizontal));
+        left_drive2.setPower(powerFactor * (pivot + (vertical - horizontal)));
+
+        if (horizontal >= 0) {
+            motorTics = left_drive1.getCurrentPosition() + (int) ((motorTics) * posNeg);
+            if (posNeg == -1) {
+                while ((left_drive1.getCurrentPosition() > motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            } else {
+                while ((left_drive1.getCurrentPosition() < motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            }
+        } else {
+            motorTics = right_drive1.getCurrentPosition() + (int) ((motorTics) * posNeg);
+            while ((right_drive1.getCurrentPosition() < motorTics) && opModeIsActive()) {
+                idle();
+            }
+        }
+        right_drive1.setPower(0);
+        left_drive1.setPower(0);
+        right_drive2.setPower(0);
+        left_drive2.setPower(0);
+
+    }
     private void turnBot(int degrees) {
         // 13.62 inches is default robot length
         double robotLength = 13.62;
