@@ -196,6 +196,8 @@ public class AutoJava extends LinearOpMode {
                 sleep(500);
                 turnBot(215);
                 sleep(500);
+                moveBot(35, 0, 0, 1);
+                sleep(500);
                 moveBot(90, 1, 0, 0);
                 moveBot(5, 0, 0,1);
                 moveBot(10, 1, 0, 0);
