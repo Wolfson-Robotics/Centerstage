@@ -70,12 +70,12 @@ public class AutoJavaRed extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        initMotors();
+            initMotors();
 
             int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
             camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
             pixelDetection = new PixelDetection();
-        pixelDetection.blue= false;
+            pixelDetection.blue = false;
             camera.setPipeline(pixelDetection);
 
 
@@ -108,119 +108,112 @@ public class AutoJavaRed extends LinearOpMode {
         waitForStart();
 
         startPressed = true;
-        boolean stop = false;
         camera.closeCameraDevice();
         while (opModeIsActive()) {
 
-            if(!stop) {
 
-
-                stop = true;
-
-
-                switch(pixelDetection.getPosition()) {
-                    case LEFT:
-                        moveBot(5 , 0, 0, -1);
-                        sleep(1500);
-                        turnBot(15);
-                        sleep(500);
-                        moveBot(43 , 0, 0, 1);
-                        moveBot(32 , 1, 0, 0);
-                        sleep(1000);
-                        armServo.setPosition(0.55);
-                        elbowServo.setPosition(0.27);
-                        sleep(1000);
-                        claw1.setPosition(0.0);
-                        sleep(500);
-                        armServo.setPosition(0.55);
-                        elbowServo.setPosition(0.35);
-                        claw1.setPosition(0.12);
-                        sleep(1000);
-                        armServo.setPosition(0.4927);
-                        elbowServo.setPosition(0.50);
-                        sleep(1000);
-                        turnBot(100);
-                        moveBot(80, 1, 0, 0);
-                        moveBot(15 , 0, 0, -1);
-                        moveBot(5, 1, 0, 0);
-                        sleep(1000);
-                        claw1.setPosition(0);
-                        sleep(1000);
-                        armServo.setPosition(0.4927);
-                        elbowServo.setPosition(0.5483);
-                        sleep(1000);
-                        moveBot(5, 1, 0, 0);
-                        break;
-                    case CENTER:
-                        moveBot(8, 0, 0, 1);
-                        moveBot(67, 1, 0, 0);
-                        armServo.setPosition(0.55);
-                        elbowServo.setPosition(0.27);
-                        sleep(1000);
-                        claw1.setPosition(0.0);
-                        sleep(500);
-                        armServo.setPosition(0.55);
-                        elbowServo.setPosition(0.35);
-                        claw1.setPosition(0.12);
-                        sleep(1000);
-                        armServo.setPosition(0.4927);
-                        elbowServo.setPosition(0.50);
-                        sleep(1000);
-                        turnBot(90);
-                        sleep(1000);
-                        moveBot(84, 1, 0, 0);
-                        moveBot(15, 0, 0, -1);
-                        sleep(500);
-                        moveBot(15, 1, 0, 0);
-                        sleep(1000);
-                        claw1.setPosition(0);
-                        sleep(1000);
-                        armServo.setPosition(0.4927);
-                        elbowServo.setPosition(0.5483);
-                        sleep(1000);
-                        moveBot(5, 1, 0, 0);
-                        break;
-                    case RIGHT:
-                        moveBot(83, 1, 0, 0);
-                        sleep(1000);
-                        turnBot(-95);
-                        sleep(500);
-                        sleep(500);
-                        armServo.setPosition(0.55);
-                        elbowServo.setPosition(0.27);
-                        sleep(1000);
-                        claw1.setPosition(0.0);
-                        sleep(500);
-                        armServo.setPosition(0.55);
-                        elbowServo.setPosition(0.35);
-                        claw1.setPosition(0.12);
-                        sleep(1000);
-                        armServo.setPosition(0.4927);
-                        elbowServo.setPosition(0.50);
-                        sleep(1000);
-                        moveBot(2, -1, 0, 0);
-                        sleep(500);
-                        turnBot(-215);
-                        sleep(500);
-                        moveBot(90, 1, 0, 0);
-                        moveBot(5, 0, 0,-1);
-                        moveBot(10, 1, 0, 0);
-                        sleep(1000);
-                        claw1.setPosition(0);
-                        sleep(1000);
-                        armServo.setPosition(0.4927);
-                        elbowServo.setPosition(0.5483);
-                        sleep(1000);
-                        moveBot(5, 1, 0, 0);
-                        break;
-                }
-
-
+            // robot must be 8.5 inches away from the left
+            switch (pixelDetection.getPosition()) {
+                case LEFT:
+                    //moveBot(5 , 0, 0, -1);
+                    moveBot(83, 1, 0, 0);
+                    sleep(1500);
+                    turnBot(15);
+                    sleep(500);
+                    moveBot(43, 0, 0, 1);
+                    moveBot(32, 1, 0, 0);
+                    sleep(1000);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.35);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
+                    turnBot(100);
+                    moveBot(80, 1, 0, 0);
+                    moveBot(15, 0, 0, -1);
+                    moveBot(5, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
+                    break;
+                case CENTER:
+                    //moveBot(8, 0, 0, 1);
+                    moveBot(67, 1, 0, 0);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.35);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
+                    turnBot(90);
+                    sleep(1000);
+                    moveBot(84, 1, 0, 0);
+                    moveBot(15, 0, 0, -1);
+                    sleep(500);
+                    moveBot(15, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
+                    break;
+                case RIGHT:
+                    moveBot(83, 1, 0, 0);
+                    sleep(1000);
+                    turnBot(95);
+                    sleep(500);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.35);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
+                    moveBot(2, -1, 0, 0);
+                    sleep(500);
+                    turnBot(-215);
+                    sleep(500);
+                    moveBot(90, 1, 0, 0);
+                    moveBot(5, 0, 0, -1);
+                    moveBot(10, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
+                    break;
             }
 
 
-
         }
+
 
 
     }
