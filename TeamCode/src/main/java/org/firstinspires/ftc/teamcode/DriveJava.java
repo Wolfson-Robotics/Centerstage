@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.io.IOException;
+import java.util.*;
 /**
  * Gamepad 1 drive trains
  * Gamepad2 Arm
@@ -67,15 +68,22 @@ public class DriveJava extends LinearOpMode {
         telemetry.update();
         double currentArmPosition = 0.55; // start position for armServo
         double currentElbowPosition = .7;
-        double startposright = 0;
-        double startposleft = 0;
         boolean buttonPressed = false;
-        boolean debug = false;
-        boolean canLog = false;
+        //variables for debug
+        String moves = "";
+        double startposright = right_drive1.getCurrentPosition();
+        double startposleft = left_drive1.getCurrentPosition();
+        double armPastPos = 0;
+        double elbowPastPos = 0;
         int numberlog = 0;
+        int clawChanged = 0;
+        boolean debug = false;
+        boolean depadPressed = false;
+        boolean turn = false;
         if(gamepad1.dpad_up)
         {
             debug = true;
+            claw1.setPosition(0.12);
             telemetry.addLine("debug on");
             telemetry.update();
         }
@@ -85,7 +93,7 @@ public class DriveJava extends LinearOpMode {
         try {
             waitForStart();
             if (debug) {
-                String fileName = "/sdcard/Logs/log" + new Date().toString() + ".txt";
+                String fileName = "/sdcard/Logs/log" + new Date() + ".txt";
                 logger = new CustomTelemetryLogger(fileName);
                 telemetry.addData("name of file: ", fileName);
                 telemetry.update();
@@ -93,23 +101,67 @@ public class DriveJava extends LinearOpMode {
             while (opModeIsActive()) {
                 if(debug)
                 {
+
                     if(gamepad1.dpad_up) {
-                        canLog = true;
                         startposright = right_drive1.getCurrentPosition();
                         startposleft = left_drive1.getCurrentPosition();
+                        armPastPos = armServo.getPosition();
+                        elbowPastPos = elbowServo.getPosition();
                         telemetry.addLine("log start");
                         telemetry.update();
                     }
-                    if(gamepad1.dpad_down && canLog)
+                    if((!gamepad1.dpad_down && !gamepad1.dpad_right)  && depadPressed) depadPressed = false;
+                    if(gamepad1.dpad_down && !depadPressed)
                     {
-                        canLog = false;
+                        depadPressed = true;
                         numberlog++;
+                        double rightDif = (right_drive1.getCurrentPosition() - startposright);
+                        double leftDif = (left_drive1.getCurrentPosition() - startposleft);
                         logger.logData("log num: " + numberlog);
-                        logger.logData("right movement:" + (right_drive1.getCurrentPosition() - startposright));
-                        logger.logData("left movement:" + (left_drive1.getCurrentPosition() - startposleft));
+                        logger.logData("right movement:" + rightDif);
+                        logger.logData("left movement:" + leftDif);
                         logger.logData("elbow pos:" + elbowServo.getPosition());
                         logger.logData("arm pos:" + armServo.getPosition());
                         telemetry.addData("log end", numberlog);
+                        telemetry.update();
+                        boolean vertical = ((rightDif >= 0) && !turn);
+                        String moveBotEnding = (vertical ? ",1,0,0);\n" : ",0,1,0);\n");
+                        moves += ((turn) ? ("moveBotExact(" + (vertical ? leftDif : rightDif) + moveBotEnding) : ("turnbot(" + (ticsToDegrees((int)(Math.round(leftDif))) + ");\n")));
+                        if((elbowServo.getPosition() == elbowPastPos) || (armPastPos == armServo.getPosition()))
+                        {
+                            moves += "armServo.setPosition(" + armServo.getPosition() + ");\n" + "elbowServo.setPosition(" + elbowServo.getPosition() + ");\n";
+                        }
+                        switch (clawChanged)
+                        {
+                            case 1:
+                                moves += "claw1.setPosition(0.12);\n";
+                                clawChanged = 0;
+                                break;
+                            case 2:
+                                moves += "claw1.setPosition(0.00);\n";
+                                clawChanged = 0;
+                                break;
+
+                        }
+                        armPastPos = armServo.getPosition();
+                        elbowPastPos = elbowServo.getPosition();
+                        startposright = right_drive1.getCurrentPosition();
+                        startposleft = left_drive1.getCurrentPosition();
+                        turn = false;
+
+                    }
+                    if(gamepad1.dpad_right && !depadPressed)
+                    {
+                        depadPressed = true;
+                        logger.logData(moves);
+                        telemetry.addLine("logged moves");
+                        telemetry.update();
+
+                    }
+                    if(gamepad1.right_stick_x != 0)
+                    {
+                        turn = true;
+                        telemetry.addLine("turn");
                         telemetry.update();
                     }
                 }
@@ -184,8 +236,8 @@ public class DriveJava extends LinearOpMode {
                     moveServo(armServo, servoSettings.getArmPos(), 20);
                     moveServo(elbowServo, servoSettings.getElbowPos(), 10);
                 }
-                if (gamepad2.left_trigger > 0) claw1.setPosition(0.12); //grab claw
-                if (gamepad2.right_trigger > 0) claw1.setPosition(0.00); //drop
+                if (gamepad2.left_trigger > 0) {claw1.setPosition(0.12);  clawChanged = 1;} //grab claw
+                if (gamepad2.right_trigger > 0) {claw1.setPosition(0.00); clawChanged = 2;}//drop
 
                 moveBot(-gamepad1.left_stick_y, (gamepad1.right_stick_x), gamepad1.left_stick_x);
 
@@ -220,6 +272,15 @@ public class DriveJava extends LinearOpMode {
             default:
                 return false;
         }
+    }
+    private int ticsToDegrees(int tics)
+    {
+        int degrees = 0;
+        double intCon = 8.727272;
+        double robotLength = 13.62;
+        double distUnit = (robotLength) / (Math.cos(45));
+        degrees = Math.round((float)(((((tics /intCon)*90)/distUnit)/1.75)));
+        return degrees;
     }
     private void moveServo(Servo servo, double targetPosition, long speed) {
         if (Math.abs(servo.getPosition() - targetPosition) > 0.01) {
