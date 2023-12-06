@@ -74,6 +74,15 @@ public class PixelDetection extends OpenCvPipeline {
 
 
 
+    public PixelDetection(boolean blue) {
+        this.blue = blue;
+    }
+
+    public PixelDetection() {
+        this.blue = true;
+    }
+
+
 
     @Override
     public Mat processFrame(Mat input) {
