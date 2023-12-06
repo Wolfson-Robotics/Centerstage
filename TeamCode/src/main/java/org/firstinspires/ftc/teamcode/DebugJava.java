@@ -6,18 +6,18 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.io.IOException;
-import java.util.*;
+
 /**
  * Gamepad 1 drive trains
  * Gamepad2 Arm
  * author: WolfsonRobotics
  */
-@TeleOp(name = "CenterStage1")
-public class DriveJava extends LinearOpMode {
+@TeleOp(name = "debugjava")
+public class DebugJava extends LinearOpMode {
     private DcMotor right_drive1;
     private DcMotor right_drive2;
     private DcMotor left_drive1;
@@ -30,6 +30,7 @@ public class DriveJava extends LinearOpMode {
     double powerFactor = 1.25;
     private ServoSettings servoSettings = new ServoSettings();
     private Map<String, ServoSettings> servoPositions = new HashMap<>();
+    private CustomTelemetryLogger logger;
 
 
     public void initMotors() {
@@ -68,13 +69,147 @@ public class DriveJava extends LinearOpMode {
         double currentArmPosition = 0.55; // start position for armServo
         double currentElbowPosition = .7;
         boolean buttonPressed = false;
+        //variables for debug
+        String moves = "";
+        double startposright = right_drive1.getCurrentPosition();
+        double startposleft = left_drive1.getCurrentPosition();
+        double armPastPos = 0;
+        double elbowPastPos = 0;
+        int numberlog = 0;
+        int clawChanged = 0;
+        boolean debug = false;
+        boolean depadPressed = false;
+        boolean turn = false;
+        int allowOtherMovement = 0;
+            debug = true;
+            claw1.setPosition(0.12);
+            telemetry.addLine("debug on");
+            telemetry.update();
 
 
         /*
          * Wait for the user to press start on the Driver Station
          */
+        try {
             waitForStart();
+            if (debug) {
+                String fileName = "/sdcard/Logs/log" + new Date().toString() +".txt";
+                logger = new CustomTelemetryLogger(fileName);
+                telemetry.addData("name of file: ", fileName);
+                telemetry.addData("logger null", (logger == null));
+                telemetry.update();
+            }
             while (opModeIsActive()) {
+                if(debug)
+                {
+
+                    if(gamepad1.dpad_up) {
+                        startposright = right_drive1.getCurrentPosition();
+                        startposleft = left_drive1.getCurrentPosition();
+                        armPastPos = armServo.getPosition();
+                        elbowPastPos = elbowServo.getPosition();
+                        telemetry.addLine("log start");
+                        telemetry.update();
+                    }
+                    if((!gamepad1.dpad_down && !gamepad1.dpad_right && !gamepad1.dpad_left)  && depadPressed) depadPressed = false;
+                    if(gamepad1.dpad_down && !depadPressed)
+                    {
+                        depadPressed = true;
+                        allowOtherMovement = 0;
+                        numberlog++;
+                        double rightDif = (right_drive1.getCurrentPosition() - startposright);
+                        double leftDif = (left_drive1.getCurrentPosition() - startposleft);
+                        logger.logData("log num: " + numberlog);
+                        logger.logData("right movement:" + rightDif);
+                        logger.logData("left movement:" + leftDif);
+                        logger.logData("elbow pos:" + elbowServo.getPosition());
+                        logger.logData("arm pos:" + armServo.getPosition());
+                        telemetry.addData("log end", numberlog);
+                        telemetry.update();
+                        boolean vertical = ((rightDif >= 0));
+                        String moveBotEnding = (vertical ? ",1,0,0);\n" : ",0,0,1);\nsleep(500)\n");
+                        if(turn) {
+                            moves +=  ("turnBot(" + (ticsToDegrees((int)(Math.round(leftDif))) + ");\nsleep(1000)\n"));
+                            turn = false;
+                        }else if((leftDif != 0) && (rightDif != 0)){
+
+                            moves += "moveBotExact(" + (vertical ? leftDif : rightDif) + moveBotEnding;
+                        }
+
+                        if((elbowServo.getPosition() == elbowPastPos) || (armPastPos == armServo.getPosition()))
+                        {
+                            moves += "armServo.setPosition(" + armServo.getPosition() + ");\nsleep(500)\n" + "elbowServo.setPosition(" + elbowServo.getPosition() + ");\nsleep(500)\n";
+                        }
+                        switch (clawChanged)
+                        {
+                            case 1:
+                                moves += "claw1.setPosition(0.12);\nsleep(500)\n";
+                                clawChanged = 0;
+                                break;
+                            case 2:
+                                moves += "claw1.setPosition(0.00);\nsleep(500)\n";
+                                clawChanged = 0;
+                                break;
+
+                        }
+                        armPastPos = armServo.getPosition();
+                        elbowPastPos = elbowServo.getPosition();
+                        startposright = right_drive1.getCurrentPosition();
+                        startposleft = left_drive1.getCurrentPosition();
+                        turn = false;
+
+                    }
+                    if(gamepad1.dpad_right && !depadPressed)
+                    {
+                        depadPressed = true;
+                        logger.logData(moves);
+                        telemetry.addLine("logged moves");
+                        telemetry.update();
+
+                    }
+                    if(gamepad1.dpad_left && !depadPressed)
+                    {
+                        depadPressed = true;
+                        sleep(1000);
+                        armServo.setPosition(0.55);
+                        elbowServo.setPosition(0.27);
+                        sleep(1000);
+                        claw1.setPosition(0.0);
+                        sleep(500);
+                        armServo.setPosition(0.55);
+                        elbowServo.setPosition(0.35);
+                        claw1.setPosition(0.12);
+                        sleep(1000);
+                        armServo.setPosition(0.4927);
+                        elbowServo.setPosition(0.50);
+                        sleep(1000);
+                        moves += "sleep(500);\n" +
+                                "armServo.setPosition(0.55);\n" +
+                                "elbowServo.setPosition(0.27);\n" +
+                                "sleep(1000);\n" +
+                                "claw1.setPosition(0.0);\n" +
+                                "sleep(500);\n" +
+                                "armServo.setPosition(0.55);\n" +
+                                "elbowServo.setPosition(0.35);\n" +
+                                "claw1.setPosition(0.12);\n" +
+                                "sleep(1000);\n" +
+                                "armServo.setPosition(0.4927);\n" +
+                                "elbowServo.setPosition(0.50);\n" +
+                                "sleep(1000);\n";
+                        armPastPos = armServo.getPosition();
+                        elbowPastPos = elbowServo.getPosition();
+                        clawChanged = 0;
+                        telemetry.addLine("drop pickup");
+                        telemetry.update();
+
+                    }
+                    if(gamepad1.right_stick_x != 0)
+                    {
+                        turn = true;
+                        telemetry.addLine("turn");
+                        telemetry.update();
+                    }
+                }
                 if (isButtonPressed("A")) {
                     buttonPressed = true;
                     servoSettings = servoPositions.get("A");
@@ -146,12 +281,48 @@ public class DriveJava extends LinearOpMode {
                     moveServo(armServo, servoSettings.getArmPos(), 20);
                     moveServo(elbowServo, servoSettings.getElbowPos(), 10);
                 }
-                if (gamepad2.left_trigger > 0) {claw1.setPosition(0.12);} //grab claw
-                if (gamepad2.right_trigger > 0) {claw1.setPosition(0.00);}//drop
+                if (gamepad2.left_trigger > 0) {claw1.setPosition(0.12);  clawChanged = 1;} //grab claw
+                if (gamepad2.right_trigger > 0) {claw1.setPosition(0.00); clawChanged = 2;}//drop
+                if(gamepad1.left_stick_y != 0 && allowOtherMovement == 0)
+                {
+                    allowOtherMovement = 1;
+                }
+                if(gamepad1.left_stick_x != 0 && allowOtherMovement == 0)
+                {
+                    allowOtherMovement = 2;
+                }
+                if(gamepad1.right_stick_x != 0 && allowOtherMovement == 0)
+                {
+                    allowOtherMovement = 3;
+                }
+                switch (allowOtherMovement)
+                {
+                    case 1:
+                        moveBot(-gamepad1.left_stick_y, 0,0);
+                        break;
+                    case 2:
+                        moveBot(0, 0, gamepad1.left_stick_x);
+                        break;
+                    case 3:
+                        moveBot(0, (gamepad1.right_stick_x), 0);
+                        break;
+                }
 
-                moveBot(-gamepad1.left_stick_y, (gamepad1.right_stick_x), gamepad1.left_stick_x);
 
             }
+        }catch (IOException e) {
+            telemetry.addData("Error", "IOException: " + e.getMessage());
+            telemetry.update();
+        } finally {
+            if (logger != null) {
+                logger.close();
+            }
+        }
+        if (debug && logger != null) {
+            logger.close();
+            telemetry.addLine("logger close");
+            telemetry.update();
+        }
     }
     private boolean isButtonPressed(String button) {
         switch (button) {
