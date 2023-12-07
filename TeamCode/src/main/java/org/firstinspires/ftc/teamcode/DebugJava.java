@@ -115,7 +115,6 @@ public class DebugJava extends LinearOpMode {
                     if(gamepad1.dpad_down && !depadPressed)
                     {
                         depadPressed = true;
-                        allowOtherMovement = 0;
                         numberlog++;
                         double rightDif = (right_drive1.getCurrentPosition() - startposright);
                         double leftDif = (left_drive1.getCurrentPosition() - startposleft);
@@ -127,27 +126,30 @@ public class DebugJava extends LinearOpMode {
                         telemetry.addData("log end", numberlog);
                         telemetry.update();
                         boolean vertical = ((rightDif >= 0));
-                        String moveBotEnding = (vertical ? ",1,0,0);\n" : ",0,0,1);\nsleep(500)\n");
-                        if(turn) {
-                            moves +=  ("turnBot(" + (ticsToDegrees((int)(Math.round(leftDif))) + ");\nsleep(1000)\n"));
-                            turn = false;
-                        }else if((leftDif != 0) && (rightDif != 0)){
-
-                            moves += "moveBotExact(" + (vertical ? leftDif : rightDif) + moveBotEnding;
-                        }
-
-                        if((elbowServo.getPosition() == elbowPastPos) || (armPastPos == armServo.getPosition()))
+                        switch (allowOtherMovement)
                         {
-                            moves += "armServo.setPosition(" + armServo.getPosition() + ");\nsleep(500)\n" + "elbowServo.setPosition(" + elbowServo.getPosition() + ");\nsleep(500)\n";
+                            case 1:
+                                moves += "moveBotExact(" + Math.abs(leftDif) + "," + ((leftDif < 0) ? -1 : 1) +",0,0);\nsleep(500);\n";
+                            case 2:
+                                moves += "moveBotExact(" + Math.abs(rightDif) + ",0,0," + ((rightDif < 0) ? -1 : 1) + ");\nsleep(500);\n";
+                            case 3:
+                                moves +=  ("turnBot(" + (ticsToDegrees((int)(Math.round(leftDif))) + ");\nsleep(1000);\n"));
+                                break;
+                        }
+                        allowOtherMovement = 0;
+
+                        if((Math.round(elbowServo.getPosition())) == Math.round(elbowPastPos) || (Math.round(armPastPos) == Math.round(armServo.getPosition())))
+                        {
+                            moves += "armServo.setPosition(" + armServo.getPosition() + ");\nsleep(500);\n" + "elbowServo.setPosition(" + elbowServo.getPosition() + ");\nsleep(500);\n";
                         }
                         switch (clawChanged)
                         {
                             case 1:
-                                moves += "claw1.setPosition(0.12);\nsleep(500)\n";
+                                moves += "claw1.setPosition(0.12);\nsleep(500);\n";
                                 clawChanged = 0;
                                 break;
                             case 2:
-                                moves += "claw1.setPosition(0.00);\nsleep(500)\n";
+                                moves += "claw1.setPosition(0.00);\nsleep(500);\n";
                                 clawChanged = 0;
                                 break;
 
