@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "AutoJavaRed", group = "Auto")
-public class AutoJavaRed extends AutoJava {
+@Autonomous(name = "AutoJavaBlueBackdrop", group = "Auto")
+public class AutoJavaBlueBackdrop extends AutoJava {
 
 
-    public AutoJavaRed() {
-        super(false);
+    public AutoJavaBlueBackdrop() {
+        super(true);
     }
 
 
@@ -33,18 +34,13 @@ public class AutoJavaRed extends AutoJava {
         camera.closeCameraDevice();
         while (opModeIsActive()) {
 
-            // robot must be 8.5 inches away from the left of the robot
+
             switch (pixelDetection.getPosition()) {
 
                 case LEFT: {
 
-                    //moveBot(5 , 0, 0, -1);
-                    moveBot(83, 1, 0, 0);
-                    sleep(1500);
-                    turnBot(15);
-                    sleep(500);
-                    moveBot(43, 0, 0, 1);
-                    moveBot(32, 1, 0, 0);
+                    moveBot(43, 0, 0, -1);
+                    moveBot(29, 1, 0, 0);
                     sleep(1000);
                     armServo.setPosition(0.55);
                     elbowServo.setPosition(0.27);
@@ -58,14 +54,25 @@ public class AutoJavaRed extends AutoJava {
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
-                    // TODO: further auto instructions
+                    turnBot(-100);
+                    moveBot(80, 1, 0, 0);
+                    moveBot(15, 0, 0, 1);
+                    moveBot(5, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
 
+
                 case CENTER: {
 
-                    //moveBot(8, 0, 0, 1);
+                    moveBot(23, 0, 0, -1);
                     moveBot(67, 1, 0, 0);
                     armServo.setPosition(0.55);
                     elbowServo.setPosition(0.27);
@@ -79,13 +86,26 @@ public class AutoJavaRed extends AutoJava {
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
-                    // TODO: further auto instructions
+                    turnBot(-90);
+                    sleep(1000);
+                    moveBot(84, 1, 0, 0);
+                    moveBot(15, 0, 0, 1);
+                    sleep(500);
+                    moveBot(15, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
 
                 case RIGHT: {
 
+                    moveBot(15, 0, 0, -1);
                     moveBot(83, 1, 0, 0);
                     sleep(1000);
                     turnBot(95);
@@ -105,16 +125,27 @@ public class AutoJavaRed extends AutoJava {
                     sleep(1000);
                     moveBot(2, -1, 0, 0);
                     sleep(500);
-                    // TODO: further auto instructions
+                    turnBot(215);
+                    sleep(500);
+                    moveBot(35, 0, 0, 1);
+                    sleep(500);
+                    moveBot(90, 1, 0, 0);
+                    moveBot(5, 0, 0, 1);
+                    moveBot(10, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
-
             }
 
 
         }
-
 
 
     }
