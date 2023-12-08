@@ -40,26 +40,44 @@ public class AutoJavaRedBackdrop extends AutoJava {
                 case LEFT: {
 
                     //moveBot(5 , 0, 0, -1);
+                    moveBot(30, 0, 0, 1);
+                    sleep(500);
                     moveBot(83, 1, 0, 0);
                     sleep(1500);
-                    turnBot(15);
+                    turnBot(-95);
                     sleep(500);
-                    moveBot(43, 0, 0, 1);
-                    moveBot(32, 1, 0, 0);
+                    // correct for robot length since it turns
+                    moveBot(13.62,-1,0,0);
+                    sleep(500);
+                    /*
+                    // EXPERIMENTAL TODO REMOVE
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.3);
+                    sleep(5000);
+                    // EXPERIMENTAL END
+                    */
+//                    moveBot(43, 0, 0, 1);
+                    moveBot(12, 1, 0, 0);
                     sleep(1000);
                     armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
+                    elbowServo.setPosition(0.33);
                     sleep(1000);
+                    moveBot(50, 1, 0, 0);
+                    //turnBot(100);
+                    //sleep(500);
+                    //moveBot(20,1,0,0);
+                    sleep(500);
+                    elbowServo.setPosition(0.27);
                     claw1.setPosition(0.0);
                     sleep(500);
                     armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
+                    elbowServo.setPosition(0.36);
                     claw1.setPosition(0.12);
                     sleep(1000);
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
-                    turnBot(100);
+                    turnBot(190);
                     moveBot(80, 1, 0, 0);
                     moveBot(15, 0, 0, -1);
                     moveBot(5, 1, 0, 0);
@@ -77,50 +95,64 @@ public class AutoJavaRedBackdrop extends AutoJava {
                 case CENTER: {
 
                     //moveBot(8, 0, 0, 1);
-                    moveBot(67, 1, 0, 0);
+                    moveBot(47, 1, 0, 0);
+                    sleep(500);
                     armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.33);
+                    sleep(1000);
+                    moveBot(20, 1, 0, 0);
+                    sleep(500);
+                    moveBot(5, -1, 0, 0);
+                    sleep(500);
                     elbowServo.setPosition(0.27);
                     sleep(1000);
                     claw1.setPosition(0.0);
                     sleep(500);
                     armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
+                    elbowServo.setPosition(0.36);
                     claw1.setPosition(0.12);
                     sleep(1000);
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
-                    turnBot(90);
+                    turnBot(100);
                     sleep(1000);
                     moveBot(84, 1, 0, 0);
-                    moveBot(15, 0, 0, -1);
                     sleep(500);
-                    moveBot(15, 1, 0, 0);
+                    moveBot(15, 0, 0, -1);
+                    //moveBot(15, 0, 0, -1);
+                    sleep(500);
+                    moveBot(10, 1, 0, 0);
                     sleep(1000);
                     claw1.setPosition(0);
                     sleep(1000);
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.5483);
-                    sleep(1000);
-                    moveBot(5, 1, 0, 0);
+                    //moveBot(5, 1, 0, 0);
                     break;
 
                 }
 
                 case RIGHT: {
 
-                    moveBot(83, 1, 0, 0);
+                    moveBot(63, 1, 0, 0);
                     sleep(1000);
                     turnBot(95);
                     sleep(500);
                     sleep(500);
                     armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.33);
+                    sleep(1000);
+                    moveBot(20, 1, 0, 0);
+                    sleep(1000);
+                    moveBot(5,-1,0,0);
+                    sleep(500);
                     elbowServo.setPosition(0.27);
                     sleep(1000);
                     claw1.setPosition(0.0);
                     sleep(500);
                     armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
+                    elbowServo.setPosition(0.36);
                     claw1.setPosition(0.12);
                     sleep(1000);
                     armServo.setPosition(0.4927);
@@ -145,6 +177,7 @@ public class AutoJavaRedBackdrop extends AutoJava {
                 }
 
             }
+            break;
 
 
         }

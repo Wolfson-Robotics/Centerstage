@@ -33,6 +33,9 @@ public class DebugJava extends LinearOpMode {
     private CustomTelemetryLogger logger;
 
 
+    private boolean buttonPressed = false;
+
+
     public void initMotors() {
         right_drive1 = hardwareMap.get(DcMotor.class, "right_drive1");
         right_drive2 = hardwareMap.get(DcMotor.class, "right_drive2");
@@ -103,6 +106,7 @@ public class DebugJava extends LinearOpMode {
                 if(debug)
                 {
 
+                    // Dpad up starts the logging pipeline
                     if(gamepad1.dpad_up) {
                         startposright = right_drive1.getCurrentPosition();
                         startposleft = left_drive1.getCurrentPosition();
@@ -112,6 +116,7 @@ public class DebugJava extends LinearOpMode {
                         telemetry.update();
                     }
                     if((!gamepad1.dpad_down && !gamepad1.dpad_right && !gamepad1.dpad_left)  && depadPressed) depadPressed = false;
+                    // Dpad down starts logging the movement
                     if(gamepad1.dpad_down && !depadPressed)
                     {
                         depadPressed = true;
@@ -161,6 +166,7 @@ public class DebugJava extends LinearOpMode {
                         turn = false;
 
                     }
+                    // Dpad up actually sends the data to the FileWriter
                     if(gamepad1.dpad_right && !depadPressed)
                     {
                         depadPressed = true;
@@ -169,6 +175,16 @@ public class DebugJava extends LinearOpMode {
                         telemetry.update();
 
                     }
+                    if (gamepad1.x) {
+                        armServo.setPosition(0.55);
+                        elbowServo.setPosition(0.3);
+                    }
+                    if (gamepad1.y) {
+                        claw1.setPosition(0.12);
+                        armServo.setPosition(0.55);
+                        elbowServo.setPosition(0.7);
+                    }
+                    // Dpad left places the pixel down on the tape
                     if(gamepad1.dpad_left && !depadPressed)
                     {
                         depadPressed = true;
