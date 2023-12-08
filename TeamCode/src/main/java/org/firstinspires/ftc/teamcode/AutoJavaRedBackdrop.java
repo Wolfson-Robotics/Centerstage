@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "AutoJavaRed", group = "Auto")
-public class AutoJavaRed extends AutoJava {
+@Autonomous(name = "AutoJavaRedBackdrop", group = "Auto")
+public class AutoJavaRedBackdrop extends AutoJava {
 
 
-    public AutoJavaRed() {
+    public AutoJavaRedBackdrop() {
         super(false);
     }
 
@@ -58,7 +59,17 @@ public class AutoJavaRed extends AutoJava {
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
-                    // TODO: further auto instructions
+                    turnBot(100);
+                    moveBot(80, 1, 0, 0);
+                    moveBot(15, 0, 0, -1);
+                    moveBot(5, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
@@ -79,7 +90,19 @@ public class AutoJavaRed extends AutoJava {
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
-                    // TODO: further auto instructions
+                    turnBot(90);
+                    sleep(1000);
+                    moveBot(84, 1, 0, 0);
+                    moveBot(15, 0, 0, -1);
+                    sleep(500);
+                    moveBot(15, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
@@ -105,7 +128,18 @@ public class AutoJavaRed extends AutoJava {
                     sleep(1000);
                     moveBot(2, -1, 0, 0);
                     sleep(500);
-                    // TODO: further auto instructions
+                    turnBot(-215);
+                    sleep(500);
+                    moveBot(90, 1, 0, 0);
+                    moveBot(5, 0, 0, -1);
+                    moveBot(10, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
