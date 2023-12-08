@@ -1,13 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "AutoJavaRed", group = "Auto")
-public class AutoJavaRed extends AutoJava {
+@Autonomous(name = "AutoJavaBlue", group = "Auto")
+public class AutoJavaBlue extends AutoJava {
 
 
-    public AutoJavaRed() {
-        super(false);
+    public AutoJavaBlue() {
+        super(true);
     }
 
 
@@ -33,18 +34,13 @@ public class AutoJavaRed extends AutoJava {
         camera.closeCameraDevice();
         while (opModeIsActive()) {
 
-            // robot must be 8.5 inches away from the left of the robot
+
             switch (pixelDetection.getPosition()) {
 
                 case LEFT: {
 
-                    //moveBot(5 , 0, 0, -1);
-                    moveBot(83, 1, 0, 0);
-                    sleep(1500);
-                    turnBot(15);
-                    sleep(500);
-                    moveBot(43, 0, 0, 1);
-                    moveBot(32, 1, 0, 0);
+                    moveBot(43, 0, 0, -1);
+                    moveBot(29, 1, 0, 0);
                     sleep(1000);
                     armServo.setPosition(0.55);
                     elbowServo.setPosition(0.27);
@@ -63,9 +59,10 @@ public class AutoJavaRed extends AutoJava {
 
                 }
 
+
                 case CENTER: {
 
-                    //moveBot(8, 0, 0, 1);
+                    moveBot(23, 0, 0, -1);
                     moveBot(67, 1, 0, 0);
                     armServo.setPosition(0.55);
                     elbowServo.setPosition(0.27);
@@ -86,6 +83,7 @@ public class AutoJavaRed extends AutoJava {
 
                 case RIGHT: {
 
+                    moveBot(15, 0, 0, -1);
                     moveBot(83, 1, 0, 0);
                     sleep(1000);
                     turnBot(95);
@@ -109,12 +107,10 @@ public class AutoJavaRed extends AutoJava {
                     break;
 
                 }
-
             }
 
 
         }
-
 
 
     }
