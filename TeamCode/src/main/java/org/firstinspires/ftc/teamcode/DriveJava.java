@@ -200,7 +200,7 @@ public class DriveJava extends LinearOpMode {
     }
 
     private void moveBot(float vertical, float pivot, float horizontal) {
-        pivot *= 0.5;
+        pivot *= 0.6;
         right_drive1.setPower(powerFactor * (-pivot + (vertical - horizontal)));
         right_drive2.setPower(powerFactor * (-pivot + vertical + horizontal));
         left_drive1.setPower(powerFactor * (pivot + vertical + horizontal));

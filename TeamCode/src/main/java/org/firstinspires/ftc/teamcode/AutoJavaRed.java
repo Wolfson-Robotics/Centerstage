@@ -38,74 +38,44 @@ public class AutoJavaRed extends AutoJava {
 
                 case LEFT: {
 
-                    //moveBot(5 , 0, 0, -1);
-                    moveBot(83, 1, 0, 0);
-                    sleep(1500);
-                    turnBot(15);
+                    moveBot(15, 0, 0, -1); // ←
                     sleep(500);
-                    moveBot(43, 0, 0, 1);
-                    moveBot(32, 1, 0, 0);
-                    sleep(1000);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
-                    sleep(1000);
-                    claw1.setPosition(0.0);
+                    lowerArm();
+                    moveBot(68, 1, 0, 0); // ↑
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
-                    claw1.setPosition(0.12);
-                    sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
-                    sleep(1000);
-                    // TODO: further auto instructions
+                    moveBot(10, -1, 0, 0); // ↓
+                    sleep(500);
+                    tapePlace();
                     break;
 
                 }
 
                 case CENTER: {
 
-                    //moveBot(8, 0, 0, 1);
-                    moveBot(67, 1, 0, 0);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
-                    sleep(1000);
-                    claw1.setPosition(0.0);
+                    moveBot(47, 1, 0, 0); // ↑
+                    lowerArm();
+                    moveBot(20, 1, 0, 0); // ↑
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
-                    claw1.setPosition(0.12);
-                    sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
-                    sleep(1000);
-                    // TODO: further auto instructions
+                    moveBot(5, -1, 0, 0); // ↓
+                    sleep(500);
+                    tapePlace();
                     break;
 
                 }
 
                 case RIGHT: {
 
-                    moveBot(83, 1, 0, 0);
-                    sleep(1000);
-                    turnBot(95);
+                    moveBot(77, 0, 0, -1);// ←
                     sleep(500);
+                    moveBot(83, 1, 0, 0); // ↑
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
-                    sleep(1000);
-                    claw1.setPosition(0.0);
+                    turnBot(95);                              // ↷
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
-                    claw1.setPosition(0.12);
-                    sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
-                    sleep(1000);
-                    moveBot(2, -1, 0, 0);
-                    sleep(500);
-                    // TODO: further auto instructions
+                    lowerArm();
+                    moveBot(80, 1, 0, 0); // ↑
+                    moveBot(7, -1, 0, 0);// ↓
+                    moveBot(5, 0, 0, 1); // ➜
+                    tapePlace();
                     break;
 
                 }

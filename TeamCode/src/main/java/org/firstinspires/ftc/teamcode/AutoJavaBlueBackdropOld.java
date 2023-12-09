@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "AutoJavaBlue", group = "Auto")
-public class AutoJavaBlue extends AutoJava {
+@Autonomous(name = "AutoJavaBlueBackdropOld", group = "Auto")
+public class AutoJavaBlueBackdropOld extends AutoJava {
 
 
-    public AutoJavaBlue() {
+    public AutoJavaBlueBackdropOld() {
         super(true);
     }
 
@@ -54,6 +54,17 @@ public class AutoJavaBlue extends AutoJava {
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
+                    turnBot(-100);
+                    moveBot(80, 1, 0, 0);
+                    moveBot(15, 0, 0, 1);
+                    moveBot(5, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
@@ -75,7 +86,19 @@ public class AutoJavaBlue extends AutoJava {
                     armServo.setPosition(0.4927);
                     elbowServo.setPosition(0.50);
                     sleep(1000);
-                    // TODO: further auto instructions
+                    turnBot(-90);
+                    sleep(1000);
+                    moveBot(84, 1, 0, 0);
+                    moveBot(15, 0, 0, 1);
+                    sleep(500);
+                    moveBot(15, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
@@ -102,13 +125,25 @@ public class AutoJavaBlue extends AutoJava {
                     sleep(1000);
                     moveBot(2, -1, 0, 0);
                     sleep(500);
-                    // TODO: further auto instructions
+                    turnBot(215);
+                    sleep(500);
+                    moveBot(35, 0, 0, 1);
+                    sleep(500);
+                    moveBot(90, 1, 0, 0);
+                    moveBot(5, 0, 0, 1);
+                    moveBot(10, 1, 0, 0);
+                    sleep(1000);
+                    claw1.setPosition(0);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.5483);
+                    sleep(1000);
+                    moveBot(5, 1, 0, 0);
                     break;
 
                 }
             }
-
-
+            break;
         }
 
 
