@@ -25,22 +25,29 @@ public class PixelDetection extends OpenCvPipeline {
     }
 
 
-    // TODO: adjust points
+    // Anchor points for boxes
     private static Point LEFT_MAT_TOPLEFT_ANCHOR_POINT = new Point(40, 0);
     private static Point CENTER_MAT_TOPLEFT_ANCHOR_POINT = new Point(200, 0);
     private static Point RIGHT_MAT_TOPLEFT_ANCHOR_POINT = new Point(350, 0);
 
     // Width and height for the bounding box
-    // TODO: change size
     private static final int REGION_WIDTH = 80;
     private static final int REGION_HEIGHT = 150;
 
     // Lower and upper boundaries for colors
     private static final Scalar
+            /*
             upper_cyan_bounds = new Scalar(64,133,251,255),
             lower_cyan_bounds = new Scalar(16,43,127,255),
             lower_red_bounds = new Scalar(175,49,21, 255),
             upper_red_bounds = new Scalar(209,87,58, 255);
+            */
+            upper_cyan_bounds = new Scalar(64,133,251,255),
+            lower_cyan_bounds = new Scalar(16,43,127,255),
+            //lower_red_bounds = new Scalar(161,19,31,255),
+            //upper_red_bounds = new Scalar(233,48,54,255);
+            lower_red_bounds = new Scalar(79, 17, 6, 255),
+            upper_red_bounds = new Scalar(203, 60, 28, 255);
 
     // Color definitions
     private final Scalar WHITE = new Scalar(255, 255, 255);

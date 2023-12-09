@@ -137,9 +137,7 @@ public abstract class AutoJava extends LinearOpMode {
 
     }
 
-    protected void moveBotExact(double motorTics, float vertical, float pivot, float horizontal) {
-
-        // 23 motor tics = 1 IN
+    protected void moveBotTics(double motorTics, float vertical, float pivot, float horizontal) {
 
         int posNeg = (vertical >= 0) ? 1 : -1;
 
@@ -217,7 +215,66 @@ public abstract class AutoJava extends LinearOpMode {
     }
 
 
+
+
+    // Common functions for autonomous instructions
+/*
+    protected void tapePlace() {
+        sleep(500);
+        armServo.setPosition(0.55);
+        elbowServo.setPosition(0.27);
+        sleep(500);
+        claw1.setPosition(0.0);
+        sleep(500);
+        armServo.setPosition(0.55);
+        elbowServo.setPosition(0.35);
+        sleep(500);
+        claw1.setPosition(0.12);
+        sleep(500);
+        armServo.setPosition(0.4927);
+        elbowServo.setPosition(0.50);
+        sleep(500);
+    }*/
+
+    protected void tapePlace() {
+        sleep(1000);
+        armServo.setPosition(0.55);
+        elbowServo.setPosition(0.27);
+        sleep(1000);
+        claw1.setPosition(0.0);
+        sleep(500);
+        armServo.setPosition(0.55);
+        elbowServo.setPosition(0.36);
+        claw1.setPosition(0.12);
+        sleep(1000);
+        armServo.setPosition(0.4927);
+        elbowServo.setPosition(0.50);
+        sleep(1000);
+    }
+
+
+    protected void backdropPlace() {
+        sleep(1000);
+        claw1.setPosition(0);
+        sleep(1000);
+        armServo.setPosition(0.4927);
+        elbowServo.setPosition(0.5483);
+        sleep(1000);
+    }
+
+    // This lowers the arm & claw not too much to push the team prop out of the way to place the pixel
+    protected void lowerArm() {
+        sleep(500);
+        armServo.setPosition(0.55);
+        elbowServo.setPosition(0.34);
+        sleep(1000);
+    }
+
+
+
+
     public abstract void runOpMode();
+
 }
 
 
