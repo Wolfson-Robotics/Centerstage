@@ -143,8 +143,7 @@ public class AutoJavaBlueBackdrop extends AutoJava {
 
                 }
             }
-
-
+            break;
         }
 
 
