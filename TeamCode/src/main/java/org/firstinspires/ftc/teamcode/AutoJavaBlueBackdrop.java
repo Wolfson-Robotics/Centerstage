@@ -44,7 +44,20 @@ public class AutoJavaBlueBackdrop extends AutoJava {
                     // + 6
                     moveBot(35, 1, 0, 0); // ↑
                     sleep(500);
-                    tapePlace();
+                    sleep(1000);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.31);
+                    sleep(1500);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
                     sleep(500);
                     //moveBot(6, -1, 0, 0);
                     turnBot(-100);                             // ↶
@@ -67,7 +80,20 @@ public class AutoJavaBlueBackdrop extends AutoJava {
                     sleep(500);
                     moveBot(7.5, -1, 0, 0);
                     sleep(500);
-                    tapePlace();
+                    sleep(1000);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.31);
+                    sleep(1500);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
 
                     turnBot(-90);                              // ↶
                     sleep(1000);
@@ -129,7 +155,20 @@ public class AutoJavaBlueBackdrop extends AutoJava {
                     sleep(500);
                     moveBot(5, 0, 0, 1);
                     sleep(500);
-                    tapePlace();
+                    sleep(1000);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.31);
+                    sleep(1500);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
 
                     moveBot(51, -1, 0, 0);// ↓
 

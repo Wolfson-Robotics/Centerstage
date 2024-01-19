@@ -96,11 +96,10 @@ public class DebugJava extends LinearOpMode {
         try {
             waitForStart();
             if (debug) {
-                String fileName = "/sdcard/Logs/log" + new Date().toString() +".txt";
+                String fileName = "/sdcard/Logs/" + new Date().getHours() + ":" + new Date().getMinutes() +":" + new Date().getSeconds() +".txt";
                 logger = new CustomTelemetryLogger(fileName);
                 telemetry.addData("name of file: ", fileName);
-                telemetry.addData("logger null", (logger == null));
-                telemetry.update();
+
             }
             while (opModeIsActive()) {
                 if(debug)
@@ -301,18 +300,6 @@ public class DebugJava extends LinearOpMode {
                 }
                 if (gamepad2.left_trigger > 0) {claw1.setPosition(0.12);  clawChanged = 1;} //grab claw
                 if (gamepad2.right_trigger > 0) {claw1.setPosition(0.00); clawChanged = 2;}//drop
-                if(gamepad1.left_stick_y != 0 && allowOtherMovement == 0)
-                {
-                    allowOtherMovement = 1;
-                }
-                if(gamepad1.left_stick_x != 0 && allowOtherMovement == 0)
-                {
-                    allowOtherMovement = 2;
-                }
-                if(gamepad1.right_stick_x != 0 && allowOtherMovement == 0)
-                {
-                    allowOtherMovement = 3;
-                }
                 switch (allowOtherMovement)
                 {
                     case 1:
@@ -325,6 +312,25 @@ public class DebugJava extends LinearOpMode {
                         moveBot(0, (gamepad1.right_stick_x), 0);
                         break;
                 }
+                if(gamepad1.left_stick_y != 0 && allowOtherMovement == 0)
+                {
+                    allowOtherMovement = 1;
+                    telemetry.addLine("1");
+                    telemetry.update();
+                }
+                if(gamepad1.left_stick_x != 0 && allowOtherMovement == 0)
+                {
+                    telemetry.addLine("2");
+                    telemetry.update();
+                    allowOtherMovement = 2;
+                }
+                if(gamepad1.right_stick_x != 0 && allowOtherMovement == 0)
+                {
+                    telemetry.addLine("3");
+                    telemetry.update();
+                    allowOtherMovement = 3;
+                }
+
 
 
             }
