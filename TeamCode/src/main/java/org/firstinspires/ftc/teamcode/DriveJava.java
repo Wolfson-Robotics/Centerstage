@@ -56,7 +56,7 @@ public class DriveJava extends LinearOpMode {
         servoPositions.put("Y", new ServoSettings().setArmPos(0.55).setElbowPos(0.28));
         servoPositions.put("dpad_down", new ServoSettings().setArmPos(0.55).setElbowPos(0.25));
         servoPositions.put("dpad_right", new ServoSettings().setArmPos(0.005).setElbowPos(0.0622));
-        servoPositions.put("dpad_up", new ServoSettings().setArmPos(0.4927).setElbowPos(0.5483));
+        servoPositions.put("dpad_up", new ServoSettings().setArmPos(0.4927).setElbowPos(0.5283));
     }
 
     @Override
@@ -174,15 +174,6 @@ public class DriveJava extends LinearOpMode {
             default:
                 return false;
         }
-    }
-    private int ticsToDegrees(int tics)
-    {
-        int degrees = 0;
-        double intCon = 8.727272;
-        double robotLength = 13.62;
-        double distUnit = (robotLength) / (Math.cos(45));
-        degrees = Math.round((float)(((((tics /intCon)*90)/distUnit)/1.75)));
-        return degrees;
     }
     private void moveServo(Servo servo, double targetPosition, long speed) {
         if (Math.abs(servo.getPosition() - targetPosition) > 0.01) {

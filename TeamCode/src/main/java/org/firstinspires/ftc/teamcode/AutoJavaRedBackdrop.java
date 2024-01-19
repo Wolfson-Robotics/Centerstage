@@ -60,7 +60,20 @@ public class AutoJavaRedBackdrop extends AutoJava {
                     sleep(500);
                     moveBot(5, 0, 0, 1);
                     sleep(500);
-                    tapePlace();
+                    sleep(1000);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.3075);
+                    sleep(1500);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
 
                     moveBot(51, -1, 0, 0);// ↓
 
@@ -70,6 +83,9 @@ public class AutoJavaRedBackdrop extends AutoJava {
                     moveBot(5, 1, 0, 0);  // ↑
                     backdropPlace();
                     sleep(1000);
+                    moveBot(5, -1, 0, 0);
+                    moveBot(100, 0, 0, 1);
+                    moveBot(20, 1, 0, 0);
                     //moveBot(5, 1, 0, 0);
                     break;
 
@@ -86,7 +102,20 @@ public class AutoJavaRedBackdrop extends AutoJava {
                     sleep(1000);
                     lowerArm();
                     sleep(500);
-                    tapePlace();
+                   sleep(1000);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.3075);
+                    sleep(1500);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
                     sleep(500);
                     turnBot(100);                              // ↷
                     sleep(1000);
@@ -97,7 +126,10 @@ public class AutoJavaRedBackdrop extends AutoJava {
                     sleep(500);
                     moveBot(10, 1, 0, 0); // ↑
                     backdropPlace();
-                    moveBot(5, 1, 0, 0); // ↑
+                    sleep(500);
+                    moveBot(5, -1, 0, 0);
+                    moveBot(80, 0, 0, 1);
+                    moveBot(20, 1, 0, 0);
                     break;
 
                 }
@@ -112,7 +144,20 @@ public class AutoJavaRedBackdrop extends AutoJava {
                     sleep(500);
                     moveBot(10, -1, 0, 0); // ↓
                     sleep(500);
-                    tapePlace();
+                    sleep(1000);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.27);
+                    sleep(1000);
+                    claw1.setPosition(0.0);
+                    sleep(500);
+                    armServo.setPosition(0.55);
+                    elbowServo.setPosition(0.3075);
+                    sleep(1500);
+                    claw1.setPosition(0.12);
+                    sleep(1000);
+                    armServo.setPosition(0.4927);
+                    elbowServo.setPosition(0.50);
+                    sleep(1000);
                     sleep(500);
                     turnBot(100);
                     sleep(500);
@@ -124,6 +169,10 @@ public class AutoJavaRedBackdrop extends AutoJava {
                     moveBot(37.5, 1, 0, 0); // ↑
                     sleep(500);
                     backdropPlace();
+                    sleep(500);
+                    moveBot(5, -1, 0, 0);
+                    moveBot(70, 0, 0, 1);
+                    moveBot(20, 1, 0, 0);
                     break;
 
                 }

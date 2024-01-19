@@ -32,9 +32,17 @@ public class AutoJavaBlue extends AutoJava {
         waitForStart();
 
         camera.closeCameraDevice();
+
+        boolean stop = false;
         while (opModeIsActive()) {
+        if(!stop)
+        {
+            stop = true;
+          //  moveBotEncode(10, 10);
+            /*
 
-
+            /*
+            stop = true;
             switch (pixelDetection.getPosition()) {
 
                 case LEFT: {
@@ -104,8 +112,8 @@ public class AutoJavaBlue extends AutoJava {
                     sleep(500);
                     // TODO: further auto instructions
                     break;
-
                 }
+                }*/
             }
 
 

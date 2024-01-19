@@ -136,7 +136,60 @@ public abstract class AutoJava extends LinearOpMode {
         left_drive2.setPower(0);
 
     }
+    protected void moveBotEncode(double Vertical, double Horizontal) {
 
+        // 23 motor tics = 1 IN
+        powerFactor = 0.75;
+        double newIntCon = 57.142857;
+        int motorTics;
+        if(Vertical != 0) {
+            int posNeg = (Vertical >= 0) ? 1 : -1;
+
+            right_drive1.setPower(powerFactor * (posNeg));
+            right_drive2.setPower(powerFactor * (posNeg));
+            left_drive1.setPower(powerFactor * (posNeg));
+            left_drive2.setPower(powerFactor * (posNeg));
+            motorTics = left_drive2.getCurrentPosition() + (int) (((Vertical * newIntCon)*5.44680851) * posNeg);
+            if (posNeg == -1) {
+                while ((left_drive2.getCurrentPosition() > motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            } else {
+                while ((left_drive2.getCurrentPosition() < motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            }
+            right_drive1.setPower(0);
+            left_drive1.setPower(0);
+            right_drive2.setPower(0);
+            left_drive2.setPower(0);
+        }
+        sleep(5000);
+        if(Horizontal != 0) {
+            int posNeg = (Horizontal >= 0) ? 1 : -1;
+            newIntCon = 53.33333333;
+            right_drive1.setPower(powerFactor * (-0 + (0 - Horizontal)));
+            right_drive2.setPower(powerFactor * (-0 + 0 + Horizontal));
+            left_drive1.setPower(powerFactor * (0 + 0 + Horizontal));
+            left_drive2.setPower(powerFactor * (0 + (0 - Horizontal)));
+            motorTics = right_drive2.getCurrentPosition() + (int) ((Horizontal * newIntCon) * posNeg);
+            if (posNeg == -1) {
+                while ((right_drive2.getCurrentPosition() > motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            } else {
+                while ((right_drive2.getCurrentPosition() < motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            }
+            right_drive1.setPower(0);
+            left_drive1.setPower(0);
+            right_drive2.setPower(0);
+            left_drive2.setPower(0);
+        }
+
+
+    }
     protected void moveBotTics(double motorTics, float vertical, float pivot, float horizontal) {
 
         int posNeg = (vertical >= 0) ? 1 : -1;
