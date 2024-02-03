@@ -32,147 +32,120 @@ public class AutoJavaRedBackdrop extends AutoJava {
         waitForStart();
 
         camera.closeCameraDevice();
+        // The "x inches input" comment is supposed to represent how many inches were initially plugged
+        // into this equation: y=3.340x-2.356 (which is a model which converts inches to in-code units)
+        // to get the value. The value will likely be adjusted from its initial value for accuracy.
         while (opModeIsActive()) {
 
             // robot must be 8.5 inches away from the left of the robot
-            switch (pixelDetection.getPosition()) { //
+            switch (pixelDetection.getPosition()) { 					//
 
-                // Completely working
+
                 case LEFT: {
 
-                    //moveBot(5 , 0, 0, -1);
-                    moveBot(77, 0, 0, 1); // ➜
+                    // 27 inches input
+                    moveBot(87.824, 0, 0, 1);
+                    sleep(1000);
+                    // 45 inches input
+                    moveBot(114.944, 1, 0, 0);
                     sleep(500);
-                    moveBot(93, 1, 0, 0); // ↑
-                    sleep(500);
-                    turnBot(-92);                              // ↶
-                    sleep(500);
-                    // correct for robot length since it turns
-                    //moveBot(13.62,1,0,0); // ↑
-                   // sleep(500);
-
+                    turnBot(-120);
+                    sleep(1000);
                     lowerArm();
-                    sleep(500);
-//                    moveBot(43, 0, 0, 1);
-                    moveBot(80, 1, 0, 0); // ↑
-                    sleep(500);
-                    moveBot(10, -1, 0, 0);// ↓
-                    sleep(500);
-                    moveBot(5, 0, 0, 1);
-                    sleep(500);
                     sleep(1000);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
-                    sleep(1000);
-                    claw1.setPosition(0.0);
+                    // 39 inches input
+                    // 27 inches input
+                    moveBot(94.824, 1, 0, 0);
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.3075);
-                    sleep(1500);
-                    claw1.setPosition(0.12);
+                    // 8 inches input
+                    moveBot(14.364, -1, 0, 0);
                     sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
+                    tapePlace();
                     sleep(1000);
-
-                    moveBot(51, -1, 0, 0);// ↓
-
-                    turnBot(230);                               // ↷
-                    moveBot(65, 1, 0, 0); // ↑
-                    moveBot(5, 0, 0, -1);// ←
-                    moveBot(5, 1, 0, 0);  // ↑
+                    turnBot(-230);
+                    sleep(500);
+                    // 30 inches input
+                    moveBot(108.844, 1, 0, 0);
+                    sleep(500);
+                    //moveBot 16 0 0 -1
+                    //moveBot 8 0 0 -1
+                    moveBot(5, 0, 0, -1);
+                    sleep(500);
                     backdropPlace();
                     sleep(1000);
                     moveBot(5, -1, 0, 0);
-                    moveBot(100, 0, 0, 1);
-                    moveBot(20, 1, 0, 0);
-                    //moveBot(5, 1, 0, 0);
+                    // 42 inches input
+                    moveBot(129.924, 0, 0, 1);
+                    // 9 inches input
+                    moveBot(27.704, 1, 0, 0);
                     break;
 
                 }
 
                 case CENTER: {
 
-                    //moveBot(8, 0, 0, 1);
-                    moveBot(47, 1, 0, 0); // ↑
-                    lowerArm();
-                    moveBot(20, 1, 0, 0); // ↑
+                    // 53.625 inches input
+                    moveBot(20, 1, 0, 0);
                     sleep(500);
-                    moveBot(5, -1, 0, 0); // ↓
-                    sleep(1000);
                     lowerArm();
                     sleep(500);
-                   sleep(1000);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
+                    moveBot(90, 1, 0, 0);
                     sleep(1000);
-                    claw1.setPosition(0.0);
+                    moveBot(30, -1, 0, 0);
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.3075);
-                    sleep(1500);
-                    claw1.setPosition(0.12);
+                    tapePlace();
+                    sleep(500);
+                    turnBot(110);
+                    sleep(500);
+                    // 33 inches input
+                    moveBot(40, 1, 0, 0);
+                    sleep(500);
+                    //moveBot 6.95 0 0 -1
+                    moveBot(4.95, 0, 0, 1);
+                    sleep(500);
+                    moveBot(78.864, 1, 0, 0);
                     sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
-                    sleep(1000);
-                    sleep(500);
-                    turnBot(100);                              // ↷
-                    sleep(1000);
-                    moveBot(84, 1, 0, 0); // ↑
-                    sleep(500);
-                    moveBot(12, 0, 0, -1);// ←
-                    //moveBot(15, 0, 0, -1);
-                    sleep(500);
-                    moveBot(10, 1, 0, 0); // ↑
                     backdropPlace();
                     sleep(500);
-                    moveBot(5, -1, 0, 0);
-                    moveBot(80, 0, 0, 1);
-                    moveBot(20, 1, 0, 0);
+                    // 30 inches input
+                    moveBot(87.344, 0, 0, 1);
+                    // 9 inches input
+                    moveBot(31.704, 1, 0, 0);
                     break;
 
                 }
 
-                // Completely working
                 case RIGHT: {
 
-                    moveBot(15, 0, 0, 1); // ➜
+                    // 13.5 inches input
+                    moveBot(24.04, 0, 0, 1);
+                    sleep(500);
+                    // 29 inches input
+                    moveBot(24, 1, 0, 0);
                     sleep(500);
                     lowerArm();
-                    moveBot(68, 1, 0, 0); // ↑
                     sleep(500);
-                    moveBot(10, -1, 0, 0); // ↓
+                    moveBot(74.504, 1, 0, 0);
                     sleep(500);
+                    // 10.5 inches input
+                    moveBot(32.714, -1, 0, 0);
                     sleep(1000);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
+                    tapePlace();
                     sleep(1000);
-                    claw1.setPosition(0.0);
+                    turnBot(110);
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.3075);
-                    sleep(1500);
-                    claw1.setPosition(0.12);
+                    // 25 inches input
+                    moveBot(83.144, 1, 0, 0);
+                    moveBot(5, 0, 0, -1);
+                    moveBot(10, 1, 0, 0);
                     sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
-                    sleep(1000);
-                    sleep(500);
-                    turnBot(100);
-                    sleep(500);
-                    moveBot(45, 1, 0, 0); // ↑
-                    sleep(500);
-                    moveBot(15, 0, 0, -1); // ←
-                    //moveBot(15, 0, 0, 1);
-                    //sleep(500);
-                    moveBot(37.5, 1, 0, 0); // ↑
-                    sleep(500);
                     backdropPlace();
-                    sleep(500);
+                    sleep(1000);
                     moveBot(5, -1, 0, 0);
-                    moveBot(70, 0, 0, 1);
-                    moveBot(20, 1, 0, 0);
+                    // 14.5 inches input
+                    moveBot(65.074, 0, 0, 1);
+                    // 9 inches input
+                    moveBot(27.704, 1, 0, 0);
                     break;
 
                 }

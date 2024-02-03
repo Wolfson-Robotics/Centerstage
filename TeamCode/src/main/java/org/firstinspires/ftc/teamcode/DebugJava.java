@@ -35,18 +35,28 @@ public class DebugJava extends LinearOpMode {
 
     private boolean buttonPressed = false;
 
+    private final double intCon = 8.727272;
+
 
     public void initMotors() {
+
         right_drive1 = hardwareMap.get(DcMotor.class, "right_drive1");
         right_drive2 = hardwareMap.get(DcMotor.class, "right_drive2");
         left_drive1 = hardwareMap.get(DcMotor.class, "left_drive1");
         left_drive2 = hardwareMap.get(DcMotor.class, "left_drive2");
+
         lift = hardwareMap.get(DcMotor.class, "lift");
         plane = hardwareMap.get(Servo.class, "plane");
 
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         right_drive1.setDirection(DcMotorSimple.Direction.REVERSE);
         right_drive2.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        right_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        right_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        left_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        left_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         claw1 = hardwareMap.get(Servo.class, "claw");
         elbowServo = hardwareMap.get(Servo.class, "elbow");
         armServo = hardwareMap.get(Servo.class, "arm");
@@ -96,7 +106,7 @@ public class DebugJava extends LinearOpMode {
         try {
             waitForStart();
             if (debug) {
-                String fileName = "/sdcard/Logs/" + new Date().getHours() + ":" + new Date().getMinutes() +":" + new Date().getSeconds() +".txt";
+                String fileName = "/sdcard/Logs/" + new Date().getHours() + "_" + new Date().getMinutes() +"_" + new Date().getSeconds() +".txt";
                 logger = new CustomTelemetryLogger(fileName);
                 telemetry.addData("name of file: ", fileName);
 
@@ -133,9 +143,11 @@ public class DebugJava extends LinearOpMode {
                         switch (allowOtherMovement)
                         {
                             case 1:
-                                moves += "moveBotExact(" + Math.abs(leftDif) + "," + ((leftDif < 0) ? -1 : 1) +",0,0);\nsleep(500);\n";
+//                                moves += "moveBotExact(" + Math.abs(leftDif) + "," + ((leftDif < 0) ? -1 : 1) +",0,0);\nsleep(500);\n";
+                                moves += "moveBot(" + ((Math.abs(leftDif))*this.intCon) + "," + ((leftDif < 0) ? -1 : 1) + ", 0, 0);\nsleep(500);\n";
                             case 2:
-                                moves += "moveBotExact(" + Math.abs(rightDif) + ",0,0," + ((rightDif < 0) ? -1 : 1) + ");\nsleep(500);\n";
+//                                moves += "moveBotExact(" + Math.abs(rightDif) + ",0,0," + ((rightDif < 0) ? -1 : 1) + ");\nsleep(500);\n";
+                                moves += "moveBot(" + ((Math.abs(rightDif))*this.intCon) + ",0,0," + ((rightDif < 0) ? -1 : 1) + ");\nsleep(500);\n";
                             case 3:
                                 moves +=  ("turnBot(" + (ticsToDegrees((int)(Math.round(leftDif))) + ");\nsleep(1000);\n"));
                                 break;
@@ -373,7 +385,6 @@ public class DebugJava extends LinearOpMode {
     private int ticsToDegrees(int tics)
     {
         int degrees = 0;
-        double intCon = 8.727272;
         double robotLength = 13.62;
         double distUnit = (robotLength) / (Math.cos(45));
         degrees = Math.round((float)(((((tics /intCon)*90)/distUnit)/1.75)));
