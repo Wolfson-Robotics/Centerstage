@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -62,6 +63,11 @@ public abstract class AutoJava extends LinearOpMode {
         right_drive1.setDirection(DcMotorSimple.Direction.REVERSE);
         right_drive2.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        right_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        right_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        left_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        left_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         claw1 = hardwareMap.get(Servo.class, "claw");
         elbowServo = hardwareMap.get(Servo.class, "elbow");
         armServo = hardwareMap.get(Servo.class, "arm");
@@ -102,7 +108,7 @@ public abstract class AutoJava extends LinearOpMode {
     }
 
 
-    protected void moveBot(double distIN, float vertical, float pivot, float horizontal) {
+    protected void moveBot(double distIN, double vertical, double pivot, double horizontal) {
 
         // 23 motor tics = 1 IN
         int motorTics;
@@ -190,6 +196,40 @@ public abstract class AutoJava extends LinearOpMode {
 
 
     }
+    public void moveBotExact(double motorTics, float vertical, float pivot, float horizontal) {
+
+        // 23 motor tics = 1 IN
+
+        int posNeg = (vertical >= 0) ? 1 : -1;
+
+        right_drive1.setPower(powerFactor * (-pivot + (vertical - horizontal)));
+        right_drive2.setPower(powerFactor * (-pivot + vertical + horizontal));
+        left_drive1.setPower(powerFactor * (pivot + vertical + horizontal));
+        left_drive2.setPower(powerFactor * (pivot + (vertical - horizontal)));
+
+        if (horizontal >= 0) {
+            motorTics = left_drive1.getCurrentPosition() + (int) ((motorTics) * posNeg);
+            if (posNeg == -1) {
+                while ((left_drive1.getCurrentPosition() > motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            } else {
+                while ((left_drive1.getCurrentPosition() < motorTics) && opModeIsActive()) {
+                    idle();
+                }
+            }
+        } else {
+            motorTics = right_drive1.getCurrentPosition() + (int) ((motorTics) * posNeg);
+            while ((right_drive1.getCurrentPosition() < motorTics) && opModeIsActive()) {
+                idle();
+            }
+        }
+        right_drive1.setPower(0);
+        left_drive1.setPower(0);
+        right_drive2.setPower(0);
+        left_drive2.setPower(0);
+
+    }
     protected void moveBotTics(double motorTics, float vertical, float pivot, float horizontal) {
 
         int posNeg = (vertical >= 0) ? 1 : -1;
@@ -223,7 +263,7 @@ public abstract class AutoJava extends LinearOpMode {
 
     }
 
-    protected void turnBot(int degrees) {
+    protected void turnBot(double degrees) {
         // 13.62 inches is default robot length
         double robotLength = 13.62;
         double distUnit = (robotLength) / (Math.cos(45));
@@ -289,6 +329,15 @@ public abstract class AutoJava extends LinearOpMode {
         sleep(500);
     }*/
 
+
+    protected void resetArmPos() {
+        sleep(1000);
+        armServo.setPosition(0.55);
+        elbowServo.setPosition(0.7);
+        sleep(1000);
+    }
+
+
     protected void tapePlace() {
         sleep(1000);
         armServo.setPosition(0.55);
@@ -297,7 +346,8 @@ public abstract class AutoJava extends LinearOpMode {
         claw1.setPosition(0.0);
         sleep(500);
         armServo.setPosition(0.55);
-        elbowServo.setPosition(0.36);
+        elbowServo.setPosition(0.3075);
+        sleep(1500);
         claw1.setPosition(0.12);
         sleep(1000);
         armServo.setPosition(0.4927);
@@ -317,9 +367,9 @@ public abstract class AutoJava extends LinearOpMode {
 
     // This lowers the arm & claw not too much to push the team prop out of the way to place the pixel
     protected void lowerArm() {
-        sleep(500);
+        sleep(1000);
         armServo.setPosition(0.55);
-        elbowServo.setPosition(0.34);
+        elbowServo.setPosition(0.31825);
         sleep(1000);
     }
 

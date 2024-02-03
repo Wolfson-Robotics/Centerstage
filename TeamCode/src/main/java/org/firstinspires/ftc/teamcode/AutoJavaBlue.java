@@ -33,90 +33,75 @@ public class AutoJavaBlue extends AutoJava {
 
         camera.closeCameraDevice();
 
-        boolean stop = false;
+        // The "x inches input" comment is supposed to represent how many inches were initially plugged
+        // into this equation: y=3.340x-2.356 (which is a model which converts inches to in-code units)
+        // to get the value. The value will likely be adjusted from its initial value for accuracy.
         while (opModeIsActive()) {
-        if(!stop)
-        {
-            stop = true;
-          //  moveBotEncode(10, 10);
-            /*
 
-            /*
-            stop = true;
             switch (pixelDetection.getPosition()) {
 
-                case LEFT: {
-
-                    moveBot(43, 0, 0, -1);
-                    moveBot(29, 1, 0, 0);
+                case LEFT:
+                    // 27 inches input
+                    moveBot(87.824, 0, 0, 1);
                     sleep(1000);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
+                    // 45 inches input
+                    moveBot(114.944, 1, 0, 0);
+                    sleep (500);
+                    turnBot(-120);
                     sleep(1000);
-                    claw1.setPosition(0.0);
+                    lowerArm();
+                    sleep(1000);
+                    // 39 inches input
+                    // 27 inches input
+                    moveBot(87.824, 1, 0, 0);
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
-                    claw1.setPosition(0.12);
+                    // 8 inches input
+                    moveBot(24.364, -1, 0, 0);
                     sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
-                    sleep(1000);
+                    tapePlace();
                     break;
 
-                }
 
-
-                case CENTER: {
-
-                    moveBot(23, 0, 0, -1);
-                    moveBot(67, 1, 0, 0);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
-                    sleep(1000);
-                    claw1.setPosition(0.0);
+                case CENTER:
+                    // 4.5 inches input
+                    moveBot(12.674, 0, 0, 1);
+                    // 53.625 inches input
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
-                    claw1.setPosition(0.12);
+                    moveBot(20, 1, 0, 0);
                     sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
+                    lowerArm();
                     sleep(1000);
-                    // TODO: further auto instructions
+                    moveBot(90, 1, 0, 0);
+                    sleep(1000);
+                    moveBot(26, -1, 0, 0);
+                    sleep(500);
+                    tapePlace();
                     break;
 
-                }
 
-                case RIGHT: {
-
-                    moveBot(15, 0, 0, -1);
-                    moveBot(83, 1, 0, 0);
+                case RIGHT:
+                    // 13.5 inches input
+                    moveBot(52.534, 0, 0, -1);
                     sleep(1000);
-                    turnBot(95);
+                    // 29 inches input
+                    moveBot(24, 1, 0, 0);
                     sleep(500);
+                    lowerArm();
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.27);
-                    sleep(1000);
-                    claw1.setPosition(0.0);
+                    moveBot(74.504, 1, 0, 0);
                     sleep(500);
-                    armServo.setPosition(0.55);
-                    elbowServo.setPosition(0.35);
-                    claw1.setPosition(0.12);
-                    sleep(1000);
-                    armServo.setPosition(0.4927);
-                    elbowServo.setPosition(0.50);
-                    sleep(1000);
-                    moveBot(2, -1, 0, 0);
-                    sleep(500);
-                    // TODO: further auto instructions
+                    // 10.5 inches input
+                    moveBot (32.714, -1, 0, 0);
+                    sleep (1000);
+                    tapePlace();
                     break;
-                }
-                }*/
+
+
+
+
+
             }
-
-
+            break;
         }
 
 

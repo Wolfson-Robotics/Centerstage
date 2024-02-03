@@ -42,12 +42,15 @@ public class PixelDetection extends OpenCvPipeline {
             lower_red_bounds = new Scalar(175,49,21, 255),
             upper_red_bounds = new Scalar(209,87,58, 255);
             */
-            upper_cyan_bounds = new Scalar(64,133,251,255),
+//            upper_cyan_bounds = new Scalar(64,133,251,255),
+//            lower_cyan_bounds = new Scalar(16,43,127,255),
+            upper_cyan_bounds = new Scalar(102,158,255,255),
             lower_cyan_bounds = new Scalar(16,43,127,255),
             //lower_red_bounds = new Scalar(161,19,31,255),
             //upper_red_bounds = new Scalar(233,48,54,255);
             lower_red_bounds = new Scalar(79, 17, 6, 255),
-            upper_red_bounds = new Scalar(203, 60, 28, 255);
+            //upper_red_bounds = new Scalar(203, 60, 28, 255);
+            upper_red_bounds = new Scalar(213, 70, 38, 255);
 
     // Color definitions
     private final Scalar WHITE = new Scalar(255, 255, 255);
