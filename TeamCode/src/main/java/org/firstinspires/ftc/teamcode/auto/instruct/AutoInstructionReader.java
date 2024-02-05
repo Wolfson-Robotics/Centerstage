@@ -1,12 +1,19 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.auto.instruct;
+
+import static org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionConstants.*;
+
+import org.firstinspires.ftc.teamcode.auto.AutoJava;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AutoInstructionReader {
 
@@ -36,18 +43,16 @@ public class AutoInstructionReader {
         }
 
 
-        // Get the filtered, actual data
         String actualData = rawLine.replaceAll("\\r|\\n", "").trim();
-        // Separate the operation and the arguments
-        ArrayList<String> rawOperationArgs = new ArrayList<>(Arrays.asList(actualData.split(" ")));
+        ArrayList<String> rawOperationArgs = new ArrayList<>(Arrays.asList(actualData.split(argJoinerRegex)));
 
         String originalOperationName = rawOperationArgs.get(0);
         String operationName = originalOperationName;
-        // convenience operation finders (i.e. you dont have to put a space in front of a comment indicator)
-        if (operationName.startsWith("//")) {
-            operationName = "//";
+        // convenience operation finders (i.e. now you dont have to put a space in front of a comment indicator)
+        if (operationName.startsWith(singleCommentMarker)) {
+            operationName = singleCommentMarker;
         }
-        // After getting the operation name, remove it from the array for it to stray true to its variable name
+        // After getting the operation name, remove it from the array for it to stay true to its variable name
         rawOperationArgs.remove(0);
 
 
@@ -113,21 +118,30 @@ public class AutoInstructionReader {
             // So we first append the "operation name" (in this case the comment indicator that
             // may contain snippets of code without a space separating it) to the operationArgs, which is
             // used in the auto instruction writer
-            case "//":
+            case singleCommentMarker:
                 rawOperationArgs.add(0, originalOperationName);
                 operationArgs = rawOperationArgs;
                 break;
-            case "/*":
-            case "*/":
-            case "STOP":
-            case "lowerArm":
-            case "tapePlace":
-            case "backdropPlace":
+            case multiCommentBegin:
+            case multiCommentEnd:
+            case stopMarker:
                 break;
             default:
-                throw new IOException("Unknown operation " + operationName);
+                if (!
+                    (
+                        Stream.of(AutoJava.class.getDeclaredMethods())
+                            .map(Method::getName)
+                            .collect(Collectors.toCollection(ArrayList::new))
+                    ).contains(operationName))
+                {
+                    throw new IOException("Unknown operation " + operationName);
+                }
+                break;
 
         }
+        operationArgs = new ArrayList<>(operationArgs.stream()
+                .map(arg -> arg.trim())
+                .collect(Collectors.toCollection(ArrayList::new)));
 
         return new AutoOperation(operationName, operationArgs);
 
@@ -170,22 +184,4 @@ public class AutoInstructionReader {
 
 
 
-}
-
-class AutoOperation {
-    private final String operationName;
-    private final ArrayList<String> operationArgs;
-
-    public AutoOperation(String operationName, ArrayList<String> operationArgs) {
-        this.operationName = operationName;
-        this.operationArgs = operationArgs;
-    }
-
-    public String getOperationName() {
-        return this.operationName;
-    }
-
-    public ArrayList<String> getOperationArgs() {
-        return this.operationArgs;
-    }
 }
