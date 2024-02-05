@@ -1,0 +1,12 @@
+# Camera Specifications
+- Team Camera as of February 2024 is a Logitech C270:
+ - https://support.logi.com/hc/en-us/articles/360023462093-Logitech-HD-Webcam-C270-Technical-Specifications
+- Fov: 60°
+- Focal Length: 4mm
+- Height: 72.91 mm
+- Width: 31.91 mm
+- Depth: 66.64 mm
+- Cable length: 1.5 m
+- Weight: 75 g
+- Diagonal field of view (dFoV): 55° 
+- Sensor Size: 3.58 mm x 2.02 mm
