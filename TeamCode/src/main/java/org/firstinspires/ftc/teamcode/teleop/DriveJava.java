@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -16,7 +16,7 @@ import java.util.*;
  * Gamepad2 Arm
  * author: WolfsonRobotics
  */
-@TeleOp(name = "CenterStage1")
+@TeleOp(name = "DriveJava")
 public class DriveJava extends LinearOpMode {
     private DcMotor right_drive1;
     private DcMotor right_drive2;
@@ -54,7 +54,7 @@ public class DriveJava extends LinearOpMode {
         servoPositions.put("A", new ServoSettings().setArmPos(0.55).setElbowPos(0.31));
         servoPositions.put("B", new ServoSettings().setArmPos(0.55).setElbowPos(0.30));
         servoPositions.put("Y", new ServoSettings().setArmPos(0.55).setElbowPos(0.28));
-        servoPositions.put("dpad_down", new ServoSettings().setArmPos(0.55).setElbowPos(0.25));
+        servoPositions.put("dpad_down", new ServoSettings().setArmPos(0.55).setElbowPos(0.255));
         servoPositions.put("dpad_right", new ServoSettings().setArmPos(0.005).setElbowPos(0.0622));
         servoPositions.put("dpad_up", new ServoSettings().setArmPos(0.4927).setElbowPos(0.5283));
     }

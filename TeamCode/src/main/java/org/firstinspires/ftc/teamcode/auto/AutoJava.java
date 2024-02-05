@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.auto;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.PixelDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
@@ -44,10 +45,16 @@ public abstract class AutoJava extends LinearOpMode {
 
     protected double powerFactor = 1;
     protected boolean blue = false;
-
+    protected boolean brake = false;
 
     protected AutoJava(boolean blue) {
         this.blue = blue;
+        this.brake = true;
+    }
+
+    protected AutoJava(boolean blue, boolean brake) {
+        this.blue = blue;
+        this.brake = brake;
     }
 
 
@@ -63,10 +70,12 @@ public abstract class AutoJava extends LinearOpMode {
         right_drive1.setDirection(DcMotorSimple.Direction.REVERSE);
         right_drive2.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        right_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        right_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        left_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        left_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        if (this.brake) {
+            right_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            right_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            left_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            left_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
 
         claw1 = hardwareMap.get(Servo.class, "claw");
         elbowServo = hardwareMap.get(Servo.class, "elbow");
@@ -310,67 +319,62 @@ public abstract class AutoJava extends LinearOpMode {
 
 
 
-    // Common functions for autonomous instructions
-/*
-    protected void tapePlace() {
-        sleep(500);
-        armServo.setPosition(0.55);
-        elbowServo.setPosition(0.27);
-        sleep(500);
-        claw1.setPosition(0.0);
-        sleep(500);
-        armServo.setPosition(0.55);
-        elbowServo.setPosition(0.35);
-        sleep(500);
-        claw1.setPosition(0.12);
-        sleep(500);
-        armServo.setPosition(0.4927);
-        elbowServo.setPosition(0.50);
-        sleep(500);
-    }*/
 
 
-    protected void resetArmPos() {
-        sleep(1000);
-        armServo.setPosition(0.55);
-        elbowServo.setPosition(0.7);
-        sleep(1000);
+    protected void commonAutoInit() {
+        initMotors();
+        initCamera();
+
+        while (!isStarted()) {
+            telemetry.addData("White percent of LCR mats:", pixelDetection.getLeftPercent() + " "
+                    + pixelDetection.getCenterPercent() + " " + pixelDetection.getRightPercent());
+            telemetry.addData("ROTATION1: ", pixelDetection.getPosition());
+            telemetry.update();
+        }
+
+        telemetry.addLine("Waiting for start");
+        telemetry.update();
+        waitForStart();
+
+        camera.closeCameraDevice();
     }
 
 
+
+    // Common functions for autonomous instructions
     protected void tapePlace() {
+        restArm();
         sleep(1000);
         armServo.setPosition(0.55);
         elbowServo.setPosition(0.27);
         sleep(1000);
         claw1.setPosition(0.0);
-        sleep(500);
+        sleep(750);
         armServo.setPosition(0.55);
         elbowServo.setPosition(0.3075);
-        sleep(1500);
+        sleep(750);
         claw1.setPosition(0.12);
         sleep(1000);
-        armServo.setPosition(0.4927);
-        elbowServo.setPosition(0.50);
-        sleep(1000);
+        restArm();
     }
 
 
     protected void backdropPlace() {
-        sleep(1000);
         claw1.setPosition(0);
         sleep(1000);
         armServo.setPosition(0.4927);
         elbowServo.setPosition(0.5483);
-        sleep(1000);
     }
 
     // This lowers the arm & claw not too much to push the team prop out of the way to place the pixel
     protected void lowerArm() {
-        sleep(1000);
         armServo.setPosition(0.55);
-        elbowServo.setPosition(0.31825);
-        sleep(1000);
+        elbowServo.setPosition(0.32485);
+    }
+
+    protected void restArm() {
+        armServo.setPosition(0.4927);
+        elbowServo.setPosition(0.50);
     }
 
 
