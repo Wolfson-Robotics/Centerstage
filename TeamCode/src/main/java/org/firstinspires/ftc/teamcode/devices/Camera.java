@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.devices;
 /**
  * Camera Specifications
  *
+ * <p>https://support.logi.com/hc/en-us/articles/360023462093-Logitech-HD-Webcam-C270-Technical-Specifications</p>
+ *
  * @author HarrisonFld
  */
 public final class Camera {

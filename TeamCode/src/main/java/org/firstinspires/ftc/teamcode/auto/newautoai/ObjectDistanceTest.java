@@ -21,10 +21,9 @@ import org.opencv.core.Mat;
 @Autonomous(name = "Team Prop Distance Test")
 public class ObjectDistanceTest extends AutoJava {
 
-    double propHeight; //Units: mm
+    private double propHeight; //Units: mm
 
-    double objectImageHeight; //Units: pixels
-
+    private  double objectImageHeight; //Units: pixels
 
     protected ObjectDistanceTest() {
         super(true); //Must be tested from the blue side
@@ -41,13 +40,13 @@ public class ObjectDistanceTest extends AutoJava {
         waitForStart();
 
         PixelDetection.BackdropPosition position = pixelDetection.getPosition();
-        double distIN = 0;
+        double dist = 0D;
 
         //Must be tested on the center
         if (position == PixelDetection.BackdropPosition.CENTER) {
 
-            distIN = calculateDistance() / 25.4; //Convert mm to inches
-            telemetry.addLine(String.valueOf(distIN));
+            dist = calculateDistance(); //Convert mm to inches
+            telemetry.addLine(String.valueOf(dist));
 
         } else {
             telemetry.addLine("Team prop not placed center but rather " + String.valueOf(position));
@@ -55,7 +54,7 @@ public class ObjectDistanceTest extends AutoJava {
 
         telemetry.update();
 
-        moveBot(distIN,1,0,0);
+        moveBot(dist,1,0,0);
 
     }
 
@@ -65,8 +64,8 @@ public class ObjectDistanceTest extends AutoJava {
     @Override
     protected void moveBot(double distMM, double forward, double pivot, double horizontal) {
 
-        distMM *= 0.0394; //Convert MM to inches
-        distMM = 3.340 * distMM -2.356; //Convert to Robot Units
+        distMM /= 25.4; //Convert MM to inches
+        distMM = 3.340 * distMM - 2.356; //Convert to Robot Units
 
         super.moveBot(distMM, forward, pivot, horizontal);
 
@@ -76,7 +75,7 @@ public class ObjectDistanceTest extends AutoJava {
     protected double calculateObjectImageHeight() {
 
         //I have no clue how to do this
-        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+        Mat mat = new Mat(3, 3, CvType.CV_8UC4);
 
         System.out.println(mat.height());
 
