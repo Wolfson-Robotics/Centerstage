@@ -19,11 +19,11 @@ public class ObjectDistanceTest extends AutoJava {
 
     //Units: mm
     double sensorHeight = 2.02D;
-    double focalLength = 4;
+    double focalLength = 4D;
     double propHeight; //Put in mm!
 
     //Units: pixels
-    double imageHeight;
+    double imageHeight = 240D;
     double objectImageHeight;
 
 
@@ -33,23 +33,43 @@ public class ObjectDistanceTest extends AutoJava {
 
     @Override
     public void runOpMode() {
-        this.commonAutoInit();
 
-        imageHeight = 1D; //Replace with image resolution height
-        objectImageHeight = 1D; //Replace with some method that gets this
+        this.initCamera();
+        this.initMotors();
+
+        // TODO: Implement object height
+        objectImageHeight = calculateObjectImageHeight(); //Replace with some method that gets this
 
         waitForStart();
 
         //Must be tested on the center
-        if (pixelDetection.getPosition() == PixelDetection.BackdropPosition.CENTER) {
-            calculateDistance();
+
+        PixelDetection.BackdropPosition position = pixelDetection.getPosition();
+        double distIN = 0;
+
+        if (position == PixelDetection.BackdropPosition.CENTER) {
+
+            distIN = calculateDistance() / 25.4; //Convert mm to inches
+            telemetry.addLine(String.valueOf(distIN));
+
+        } else {
+            telemetry.addLine("Team prop not placed center but rather " + String.valueOf(position));
         }
+
+        telemetry.update();
+
+        moveBot(distIN,0,0,0);
 
     }
 
     /**
      * @return distance in millimeters
      */
+
+    protected double calculateObjectImageHeight() {
+        return 1D;
+    }
+
     protected double calculateDistance() {
         double distance = (focalLength * objectImageHeight * imageHeight) / (propHeight * sensorHeight);
         return distance;
