@@ -5,6 +5,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.PixelDetection;
 import org.firstinspires.ftc.teamcode.auto.AutoJava;
+import org.firstinspires.ftc.teamcode.devices.Camera;
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 /**
  * Small test to see if the distance of the team prop from the camera can be calculated
@@ -17,14 +21,9 @@ import org.firstinspires.ftc.teamcode.auto.AutoJava;
 @Autonomous(name = "Team Prop Distance Test")
 public class ObjectDistanceTest extends AutoJava {
 
-    //Units: mm
-    double sensorHeight = 2.02D;
-    double focalLength = 4D;
-    double propHeight; //Put in mm!
+    double propHeight; //Units: mm
 
-    //Units: pixels
-    double imageHeight = 240D;
-    double objectImageHeight;
+    double objectImageHeight; //Units: pixels
 
 
     protected ObjectDistanceTest() {
@@ -37,16 +36,14 @@ public class ObjectDistanceTest extends AutoJava {
         this.initCamera();
         this.initMotors();
 
-        // TODO: Implement object height
         objectImageHeight = calculateObjectImageHeight(); //Replace with some method that gets this
 
         waitForStart();
 
-        //Must be tested on the center
-
         PixelDetection.BackdropPosition position = pixelDetection.getPosition();
         double distIN = 0;
 
+        //Must be tested on the center
         if (position == PixelDetection.BackdropPosition.CENTER) {
 
             distIN = calculateDistance() / 25.4; //Convert mm to inches
@@ -58,21 +55,40 @@ public class ObjectDistanceTest extends AutoJava {
 
         telemetry.update();
 
-        moveBot(distIN,0,0,0);
+        moveBot(distIN,1,0,0);
+
+    }
+
+    /**
+     *  Overrides the traditional moveBot, this one uses Millimeter as the distance the robot movements.
+     */
+    @Override
+    protected void moveBot(double distMM, double forward, double pivot, double horizontal) {
+
+        distMM *= 0.0394; //Convert MM to inches
+        distMM = 3.340 * distMM -2.356; //Convert to Robot Units
+
+        super.moveBot(distMM, forward, pivot, horizontal);
+
+    }
+
+    // TODO: Actually Calculate the Object Image Height
+    protected double calculateObjectImageHeight() {
+
+        //I have no clue how to do this
+        Mat mat = Mat.eye(3, 3, CvType.CV_8UC1);
+
+        System.out.println(mat.height());
+
+        return mat.height();
 
     }
 
     /**
      * @return distance in millimeters
      */
-
-    protected double calculateObjectImageHeight() {
-        return 1D;
-    }
-
     protected double calculateDistance() {
-        double distance = (focalLength * objectImageHeight * imageHeight) / (propHeight * sensorHeight);
-        return distance;
+        return (Camera.focalLength * objectImageHeight * Camera.cameraResHeight) / (propHeight * Camera.sensorHeightMM);
     }
 
 }
