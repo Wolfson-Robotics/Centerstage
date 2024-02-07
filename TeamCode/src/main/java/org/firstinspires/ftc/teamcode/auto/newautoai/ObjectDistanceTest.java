@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto.newautoai;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.PixelDetection;
 import org.firstinspires.ftc.teamcode.auto.AutoJava;
@@ -9,24 +8,30 @@ import org.firstinspires.ftc.teamcode.devices.Camera;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.Videoio;
 
 /**
  * Small test to see if the distance of the team prop from the camera can be calculated
  * and taken into affect for autonomous.
  *
- * Must be tested on the blue center!
+ * <P>Must be tested on the blue center!<P>
  *
  * @author HarrisonFld
  */
-@Autonomous(name = "Team Prop Distance Test")
+@Autonomous(name = "Team Prop Distance Test", group = "Auto")
 public class ObjectDistanceTest extends AutoJava {
 
     private double propHeight; //Units: mm
 
-    private  double objectImageHeight; //Units: pixels
+    private double objectImageHeight; //Units: pixels
 
     protected ObjectDistanceTest() {
         super(true); //Must be tested from the blue side
+    }
+
+    public static void main(String[] args) {
+        new ObjectDistanceTest().runOpMode();
     }
 
     @Override
@@ -49,12 +54,13 @@ public class ObjectDistanceTest extends AutoJava {
             telemetry.addLine(String.valueOf(dist));
 
         } else {
-            telemetry.addLine("Team prop not placed center but rather " + String.valueOf(position));
+            telemetry.addLine("Team prop not placed center but rather " + position);
         }
 
         telemetry.update();
-
         moveBot(dist,1,0,0);
+        lowerArm();
+
 
     }
 
@@ -74,12 +80,48 @@ public class ObjectDistanceTest extends AutoJava {
     // TODO: Actually Calculate the Object Image Height
     protected double calculateObjectImageHeight() {
 
-        //I have no clue how to do this
-        Mat mat = new Mat(3, 3, CvType.CV_8UC4);
+        VideoCapture video = new VideoCapture(0);
+        Mat frame = new Mat(CvType.CV_8UC4);
 
-        System.out.println(mat.height());
+        video.read(frame);
 
-        return mat.height();
+        //Temp to see if the camera width can be retrieved
+        //telemetry.addLine("Frame Width" + String.valueOf(video.get(Videoio.CAP_PROP_FRAME_WIDTH)));
+        //telemetry.update();
+
+        double[] blueSampleRGB = {60, 221, 76}; // TODO: Update To Actual Team Prop Color
+
+        double highestRow = 0;
+        double lowestRow = frame.rows();
+        int threshold = 10;
+
+        for (int row = 0; row < frame.rows(); row++) {
+            cols:
+            for (int col = 0; col < frame.cols(); col++) {
+
+                double[] pixelSampleRGB = frame.get(row, col);
+
+                for (double blueRGB : blueSampleRGB) {
+                    for (double pixelRGB : pixelSampleRGB) {
+
+                        //Check if it this pixel meets the threshold
+                        if (!(blueRGB - pixelRGB <= threshold || pixelRGB - blueRGB <= threshold)) {
+                            continue cols;
+                        }
+
+                    }
+                }
+
+                highestRow = (row > highestRow) ? row : highestRow;
+                lowestRow = (row < lowestRow) ? row : highestRow;
+
+            }
+        }
+
+        frame.release();
+        video.release();
+
+        return highestRow - lowestRow;
 
     }
 
