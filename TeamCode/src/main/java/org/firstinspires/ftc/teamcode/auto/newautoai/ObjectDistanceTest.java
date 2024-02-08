@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.teamcode.PixelDetection;
 import org.firstinspires.ftc.teamcode.auto.AutoJava;
 import org.firstinspires.ftc.teamcode.devices.Camera;
+import org.firstinspires.ftc.teamcode.devices.Prop;
+import org.firstinspires.ftc.teamcode.devices.Robot;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -22,7 +24,7 @@ import org.opencv.videoio.Videoio;
 @Autonomous(name = "Team Prop Distance Test", group = "Auto")
 public class ObjectDistanceTest extends AutoJava {
 
-    private double propHeight; //Units: mm
+    private double cameraAngle = Robot.cameraAngle;
 
     private double objectImageHeight; //Units: pixels
 
@@ -58,9 +60,12 @@ public class ObjectDistanceTest extends AutoJava {
         }
 
         telemetry.update();
-        moveBot(dist,1,0,0);
+
+        moveBot(dist * Math.sin(cameraAngle), 1,0,0); //Move the horizontal distance of the robot to the prop
+        //moveBot(dist,1,0,0); //Move the Straightforward distance of the camera to prop
         lowerArm();
 
+        camera.closeCameraDevice();
 
     }
 
@@ -77,7 +82,6 @@ public class ObjectDistanceTest extends AutoJava {
 
     }
 
-    // TODO: Actually Calculate the Object Image Height
     protected double calculateObjectImageHeight() {
 
         VideoCapture video = new VideoCapture(0);
@@ -129,7 +133,7 @@ public class ObjectDistanceTest extends AutoJava {
      * @return distance in millimeters
      */
     protected double calculateDistance() {
-        return (Camera.focalLength * objectImageHeight * Camera.cameraResHeight) / (propHeight * Camera.sensorHeightMM);
+        return (Camera.focalLength * objectImageHeight * Camera.cameraResHeight) / (Prop.propHeight * Camera.sensorHeightMM);
     }
 
 }

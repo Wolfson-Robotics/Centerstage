@@ -11,7 +11,8 @@ public class Robot {
     public static final double
             robotHeight = 3D,
             robotWidth = 3D,
-            cameraHeightFromGround = 3D;
+            cameraHeightFromGround = 3D,
+            cameraAngle = 30;
 
 
 }
