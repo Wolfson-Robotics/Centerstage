@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode.devices;
  *
  * @author HarrisonFld
  */
-public class Robot {
+public class RobotSpecs {
 
     // TODO: Update Parameters of Robot
     public static final double

@@ -4,14 +4,12 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.teamcode.PixelDetection;
 import org.firstinspires.ftc.teamcode.auto.AutoJava;
-import org.firstinspires.ftc.teamcode.devices.Camera;
-import org.firstinspires.ftc.teamcode.devices.Prop;
-import org.firstinspires.ftc.teamcode.devices.Robot;
-import org.opencv.core.Core;
+import org.firstinspires.ftc.teamcode.devices.CameraSpecs;
+import org.firstinspires.ftc.teamcode.devices.PropSpecs;
+import org.firstinspires.ftc.teamcode.devices.RobotSpecs;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.videoio.VideoCapture;
-import org.opencv.videoio.Videoio;
 
 /**
  * Small test to see if the distance of the team prop from the camera can be calculated
@@ -23,8 +21,6 @@ import org.opencv.videoio.Videoio;
  */
 @Autonomous(name = "Team Prop Distance Test", group = "Auto")
 public class ObjectDistanceTest extends AutoJava {
-
-    private double cameraAngle = Robot.cameraAngle;
 
     private double objectImageHeight; //Units: pixels
 
@@ -61,7 +57,7 @@ public class ObjectDistanceTest extends AutoJava {
 
         telemetry.update();
 
-        moveBot(dist * Math.sin(cameraAngle), 1,0,0); //Move the horizontal distance of the robot to the prop
+        moveBot(dist * Math.sin(RobotSpecs.cameraAngle), 1,0,0); //Move the horizontal distance of the robot to the prop
         //moveBot(dist,1,0,0); //Move the Straightforward distance of the camera to prop
         lowerArm();
 
@@ -76,7 +72,7 @@ public class ObjectDistanceTest extends AutoJava {
     protected void moveBot(double distMM, double forward, double pivot, double horizontal) {
 
         distMM /= 25.4; //Convert MM to inches
-        distMM = 3.340 * distMM - 2.356; //Convert to Robot Units
+        distMM = (3.340 * distMM) - 2.356; //Convert to Robot Units
 
         super.moveBot(distMM, forward, pivot, horizontal);
 
@@ -93,11 +89,19 @@ public class ObjectDistanceTest extends AutoJava {
         //telemetry.addLine("Frame Width" + String.valueOf(video.get(Videoio.CAP_PROP_FRAME_WIDTH)));
         //telemetry.update();
 
-        double[] blueSampleRGB = {60, 221, 76}; // TODO: Update To Actual Team Prop Color
+        double[] blueSampleRGB = {16, 43, 127};
 
         double highestRow = 0;
         double lowestRow = frame.rows();
         int threshold = 10;
+
+        /*
+        Scalar upper_cyan_bounds = new Scalar(102,158,255,255),
+                lower_cyan_bounds = new Scalar(16,43,127,255),
+                lower_red_bounds = new Scalar(79, 17, 6, 255),
+                upper_red_bounds = new Scalar(213, 70, 38, 255);
+        Core.inRange(frame, lower_cyan_bounds, upper_cyan_bounds, frame);
+         */
 
         for (int row = 0; row < frame.rows(); row++) {
             cols:
@@ -109,7 +113,7 @@ public class ObjectDistanceTest extends AutoJava {
                     for (double pixelRGB : pixelSampleRGB) {
 
                         //Check if it this pixel meets the threshold
-                        if (!(blueRGB - pixelRGB <= threshold || pixelRGB - blueRGB <= threshold)) {
+                        if (!(Math.abs(blueRGB - pixelRGB) <= threshold)) {
                             continue cols;
                         }
 
@@ -133,7 +137,8 @@ public class ObjectDistanceTest extends AutoJava {
      * @return distance in millimeters
      */
     protected double calculateDistance() {
-        return (Camera.focalLength * objectImageHeight * Camera.cameraResHeight) / (Prop.propHeight * Camera.sensorHeightMM);
+        return (CameraSpecs.focalLength * objectImageHeight * CameraSpecs.cameraResHeight)
+                / (PropSpecs.propHeight * CameraSpecs.sensorHeightMM);
     }
 
 }

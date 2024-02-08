@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.devices;
 /**
  * Team Prop Specifications
  */
-public final class Prop {
+public final class PropSpecs {
 
     // TODO: Update Prop Measurements
 

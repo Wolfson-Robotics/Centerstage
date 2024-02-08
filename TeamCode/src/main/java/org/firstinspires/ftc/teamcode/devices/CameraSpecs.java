@@ -7,7 +7,7 @@ package org.firstinspires.ftc.teamcode.devices;
  *
  * @author HarrisonFld
  */
-public final class Camera {
+public final class CameraSpecs {
 
     public static final String cameraModel = "Logitech C270";
     public static final int FOV = 60;
