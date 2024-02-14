@@ -70,43 +70,55 @@ public class AutoInstructionReaderJava extends AutoJava {
                 switch (operationName) {
 
                     case "moveBot":
-                    case "turnBot":
-                        finalOperationArgs = operationArgs.stream()
+                        ArrayList<Double> moveBotArgs = operationArgs.stream()
+                                .map(String::valueOf)
                                 .map(Double::parseDouble)
                                 .collect(Collectors.toCollection(ArrayList::new));
+                        moveBot(moveBotArgs.get(0), moveBotArgs.get(1), moveBotArgs.get(2), moveBotArgs.get(3));
                         break;
-
+                    case "turnBot":
+                        turnBot(Double.parseDouble(operationArgs.get(0)));
+                        break;
                     case "sleep":
-                        finalOperationArgs = operationArgs.stream()
-                                .map(Long::parseLong)
-                                .collect(Collectors.toCollection(ArrayList::new));
+                        sleep(Long.parseLong(operationArgs.get(0)));
                         break;
-
 
                     case "setPosition":
                         Double servoPos = Double.parseDouble(operationArgs.get(1));
-                        try {
-                            execHardwareMethod(operationArgs.get(0), operationName, servoPos);
-                        } catch(Exception e) {
-                            throw new IOException(e);
+                        switch(operationArgs.get(0)) {
+                            case "armServo":
+                                armServo.setPosition(servoPos);
+                                break;
+                            case "elbowServo":
+                                elbowServo.setPosition(servoPos);
+                                break;
+                            case "claw1":
+                                claw1.setPosition(servoPos);
+                                break;
                         }
+                        break;
+
+
+                    case "restArm":
+                        restArm();
+                        break;
+                    case "trussArm":
+                        trussArm();
+                        break;
+                    case "lowerArm":
+                        lowerArm();
+                        break;
+                    case "tapePlace":
+                        tapePlace();
+                        break;
+                    case "backdropPlace":
+                        backdropPlace();
                         break;
 
                     default:
                         finalOperationArgs = operationArgs;
                         break;
 
-                }
-
-
-                try {
-                    if (finalOperationArgs.size() > 0) {
-                        execAutoMethod(operationName, finalOperationArgs);
-                    } else {
-                        execAutoMethod(operationName);
-                    }
-                } catch (Exception e) {
-                    throw new IOException(e);
                 }
 
 
@@ -125,49 +137,6 @@ public class AutoInstructionReaderJava extends AutoJava {
         }
 
 
-    }
-
-
-
-
-
-
-
-
-
-    private <T> void execMethod(Class object, String methodName, T... arguments) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-
-        ArrayList<?> args = new ArrayList<>(Arrays.asList(arguments));
-        if (args.size() <= 0) {
-            object.getDeclaredMethod(methodName).invoke(this);
-            return;
-        }
-
-        object.getDeclaredMethod(methodName, args.stream()
-                .map(param -> param.getClass())
-                .toArray(Class[]::new)).invoke(this, args);
-    }
-
-
-    private void execMethod(Class object, String methodName) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        execMethod(object, methodName, dummyArr);
-    }
-
-
-    private <T> void execAutoMethod(String methodName, T... args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        execMethod(this.getClass(), methodName, args);
-    }
-
-    private void execAutoMethod(String methodName) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        execAutoMethod(methodName, dummyArr);
-    }
-
-    private <T> void execHardwareMethod(String deviceName, String methodName, T... args) throws NoSuchFieldException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        execMethod(this.getClass().getDeclaredField(deviceName).getDeclaringClass(), methodName, args);
-    }
-
-    private void execHardwareMethod(String deviceName, String methodName) throws NoSuchFieldException, InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        execHardwareMethod(deviceName, methodName, dummyArr);
     }
 
 

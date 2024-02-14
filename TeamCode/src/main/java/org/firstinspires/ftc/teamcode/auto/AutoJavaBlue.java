@@ -29,28 +29,32 @@ public class AutoJavaBlue extends AutoJava {
         switch (pixelDetection.getPosition()) {
 
             case LEFT: {
-                right_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                right_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                left_drive1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-                left_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 // 27 inches input
-                moveBot(87.824, 0, 0, 1);
+                moveBot(59.824, 0, 0, 1);
                 sleep(1000);
-                // 45 inches input
-                moveBot(114.944, 1, 0, 0);
+// 45 inches input
+                moveBot(93.944, 1, 0, 0);
                 sleep(500);
-                turnBot(-120);
-                sleep(1000);
+                turnBot(-115);
+                sleep(500);
                 lowerArm();
-                sleep(1000);
-                // 39 inches input
-                // 27 inches input
-                moveBot(87.824, 1, 0, 0);
                 sleep(500);
-                // 8 inches input
-                moveBot(24.364, -1, 0, 0);
-                sleep(1000);
-                tapePlace();
+// 39 inches input
+// 27 inches input
+// -5.5 inches input (80.824-16.014)
+/*
+moveBot(47.136, 1, 0, 0);
+sleep(500);
+// 8 inches input
+moveBot(14.364, -1, 0, 0);
+sleep(500);
+tapePlace();
+sleep(500);
+moveBot(14.364, -1, 0, 0);
+sleep(500);
+*/
+// 54 inches input
+                moveBot(148.004, 1, 0, 0);
                 break;
 
             }
@@ -58,15 +62,16 @@ public class AutoJavaBlue extends AutoJava {
 
             case CENTER: {
 
-                moveBot(23, 0, 0, 1);
+                moveBot(10, 0, 0, 1);
+// 53.625 inches input
                 moveBot(20, 1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 lowerArm();
+                sleep(500);
+                moveBot(90, 1, 0, 0);
                 sleep(1000);
-                moveBot(67, 1, 0, 0);
-                sleep(1150);
-                moveBot(20, -1, 0, 0);
-                sleep(1150);
+                moveBot(30, -1, 0, 0);
+                sleep(500);
                 tapePlace();
                 break;
 
@@ -75,13 +80,18 @@ public class AutoJavaBlue extends AutoJava {
 
             case RIGHT: {
 
-                moveBot(47, 0, 0, 1);
-                sleep(1000);
+// 13.5 inches input PLUS 7.5 inches input (31.04 + 22.694)
+                moveBot(57.934, 0, 0, 1);
+                sleep(500);
+// 29 inches input
+                moveBot(24, 1, 0, 0);
+                sleep(500);
                 lowerArm();
-                sleep(1000);
-                moveBot(43, 1, 0, 0);
-                sleep(850);
-                moveBot(3, -1, 0, 0);
+                sleep(500);
+                moveBot(74.504, 1, 0, 0);
+                sleep(500);
+// 10.5 inches input
+                moveBot(32.714, -1, 0, 0);
                 sleep(1000);
                 tapePlace();
                 break;

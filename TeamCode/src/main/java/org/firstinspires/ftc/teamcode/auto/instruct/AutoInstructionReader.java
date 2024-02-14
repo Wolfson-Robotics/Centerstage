@@ -56,6 +56,12 @@ public class AutoInstructionReader {
         rawOperationArgs.remove(0);
 
 
+        rawOperationArgs = new ArrayList<>(rawOperationArgs.stream()
+                .filter(arg -> arg.trim().length() > 0)
+                .map(arg -> arg.trim())
+                .collect(Collectors.toCollection(ArrayList::new)));
+
+
         ArrayList<String> operationArgs = new ArrayList<>();
         switch (operationName) {
 
@@ -85,6 +91,18 @@ public class AutoInstructionReader {
                 break;
 
             }
+            case "sleep": {
+
+                if (rawOperationArgs.size() != 1) {
+                    throw new IOException("Incorrect number of parameters at sleep call at line " + this.getLineNumber());
+                }
+                if (!isInteger(rawOperationArgs.get(0))) {
+                    throw new IOException("Parameter " + rawOperationArgs.get(0) + " is not a valid integer for sleep call at line " + this.getLineNumber());
+                }
+                operationArgs.add(rawOperationArgs.get(0));
+                break;
+
+            }
             case "setPosition": {
 
                 if (rawOperationArgs.size() != 2) {
@@ -101,18 +119,6 @@ public class AutoInstructionReader {
                 break;
 
             }
-            case "sleep": {
-
-                if (rawOperationArgs.size() != 1) {
-                    throw new IOException("Incorrect number of parameters at sleep call at line " + this.getLineNumber());
-                }
-                if (!isInteger(rawOperationArgs.get(0))) {
-                    throw new IOException("Parameter " + rawOperationArgs.get(0) + " is not a valid integer for sleep call at line " + this.getLineNumber());
-                }
-                operationArgs.add(rawOperationArgs.get(0));
-                break;
-
-            }
 
             // We still want the whole text on the line of the comment
             // So we first append the "operation name" (in this case the comment indicator that
@@ -125,23 +131,16 @@ public class AutoInstructionReader {
             case multiCommentBegin:
             case multiCommentEnd:
             case stopMarker:
+            case "restArm":
+            case "trussArm":
+            case "lowerArm":
+            case "tapePlace":
+            case "backdropPlace":
                 break;
             default:
-                if (!
-                    (
-                        Stream.of(AutoJava.class.getDeclaredMethods())
-                            .map(Method::getName)
-                            .collect(Collectors.toCollection(ArrayList::new))
-                    ).contains(operationName))
-                {
-                    throw new IOException("Unknown operation " + operationName);
-                }
-                break;
+                throw new IOException("Unknown operation " + operationName + " with specific provided arguments at line " + this.getLineNumber());
 
         }
-        operationArgs = new ArrayList<>(operationArgs.stream()
-                .map(arg -> arg.trim())
-                .collect(Collectors.toCollection(ArrayList::new)));
 
         return new AutoOperation(operationName, operationArgs);
 
@@ -166,6 +165,9 @@ public class AutoInstructionReader {
             return false;
         }
     }
+
+
+
 
 
     private boolean servoExists(String servoName) {

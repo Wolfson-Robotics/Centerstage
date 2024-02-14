@@ -33,6 +33,7 @@ public class DriveJava extends LinearOpMode {
 
 
     public void initMotors() {
+
         right_drive1 = hardwareMap.get(DcMotor.class, "right_drive1");
         right_drive2 = hardwareMap.get(DcMotor.class, "right_drive2");
         left_drive1 = hardwareMap.get(DcMotor.class, "left_drive1");
@@ -43,12 +44,15 @@ public class DriveJava extends LinearOpMode {
         lift.setDirection(DcMotorSimple.Direction.REVERSE);
         right_drive1.setDirection(DcMotorSimple.Direction.REVERSE);
         right_drive2.setDirection(DcMotorSimple.Direction.REVERSE);
+
         claw1 = hardwareMap.get(Servo.class, "claw");
         elbowServo = hardwareMap.get(Servo.class, "elbow");
         armServo = hardwareMap.get(Servo.class, "arm");
+
         claw1.setPosition(0.0);
         armServo.setPosition(0.55);
         elbowServo.setPosition(0.7);
+
         servoPositions.put("right_bumper", new ServoSettings().setArmPos(0.55).setElbowPos(0.388));
         servoPositions.put("X", new ServoSettings().setArmPos(0.55).setElbowPos(0.3225));
         servoPositions.put("A", new ServoSettings().setArmPos(0.55).setElbowPos(0.31));
@@ -73,85 +77,85 @@ public class DriveJava extends LinearOpMode {
         /*
          * Wait for the user to press start on the Driver Station
          */
-            waitForStart();
-            while (opModeIsActive()) {
-                if (isButtonPressed("A")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("A");
-                } else if (isButtonPressed("B")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("B");
-                } else if (isButtonPressed("X")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("X");
-                } else if (isButtonPressed("Y")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("Y");
-                } else if (isButtonPressed("dpad_up")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("dpad_up");
-                } else if (isButtonPressed("dpad_down")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("dpad_down");
-                } else if (isButtonPressed("dpad_right")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("dpad_right");
-                } else if (isButtonPressed("right_bumper")) {
-                    buttonPressed = true;
-                    servoSettings = servoPositions.get("right_bumper");
-                }
-
-                if (gamepad2.right_stick_y != 0 || gamepad2.left_stick_y != 0)
-                    buttonPressed = false;
-                if (gamepad1.y) {
-                    telemetry.addLine("Lift move up");
-                    telemetry.update();
-                    lift.setPower(-.9);
-                    sleep(100);
-                    lift.setPower(0);
-                }
-                if (gamepad1.a) {
-                    telemetry.addLine("Lift move down");
-                    telemetry.update();
-                    lift.setPower(.9);
-                    sleep(100);
-                    lift.setPower(0);
-                }
-                if (gamepad1.b) {
-                    telemetry.addLine("Shoot plane");
-                    telemetry.update();
-                    plane.setPosition(0.6);
-                    sleep(2000);
-                    plane.setPosition(0.0);
-                }
-                if (!buttonPressed) {
-                    if (gamepad2.left_stick_y > 0) {
-                        currentArmPosition += 0.01; // increase by a small step
-                        if (currentArmPosition > 0.55) currentArmPosition = 0.55;
-                    } else if (gamepad2.left_stick_y < 0) {
-                        currentArmPosition -= 0.01; // decrease by a small steps
-                        if (currentArmPosition < 0) currentArmPosition = 0;
-                    }
-                    if (gamepad2.right_stick_y < 0) {
-                        currentElbowPosition += 0.01; // increase by a small step
-                        if (currentElbowPosition > 0.7) currentElbowPosition = 0.7;
-                    } else if (gamepad2.right_stick_y > 0) {
-                        currentElbowPosition -= 0.01; // decrease by a small steps
-                        if (currentElbowPosition < 0) currentElbowPosition = 0;
-                    }
-
-                    moveServo(armServo, currentArmPosition, 20);
-                    moveServo(elbowServo, currentElbowPosition, 10);
-                } else {
-                    moveServo(armServo, servoSettings.getArmPos(), 20);
-                    moveServo(elbowServo, servoSettings.getElbowPos(), 10);
-                }
-                if (gamepad2.left_trigger > 0) {claw1.setPosition(0.12);} //grab claw
-                if (gamepad2.right_trigger > 0) {claw1.setPosition(0.00);}//drop
-
-                moveBot(-gamepad1.left_stick_y, (gamepad1.right_stick_x), gamepad1.left_stick_x);
-
+        waitForStart();
+        while (opModeIsActive()) {
+            if (isButtonPressed("A")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("A");
+            } else if (isButtonPressed("B")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("B");
+            } else if (isButtonPressed("X")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("X");
+            } else if (isButtonPressed("Y")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("Y");
+            } else if (isButtonPressed("dpad_up")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("dpad_up");
+            } else if (isButtonPressed("dpad_down")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("dpad_down");
+            } else if (isButtonPressed("dpad_right")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("dpad_right");
+            } else if (isButtonPressed("right_bumper")) {
+                buttonPressed = true;
+                servoSettings = servoPositions.get("right_bumper");
             }
+
+            if (gamepad2.right_stick_y != 0 || gamepad2.left_stick_y != 0)
+                buttonPressed = false;
+            if (gamepad1.y) {
+                telemetry.addLine("Lift move up");
+                telemetry.update();
+                lift.setPower(-.9);
+                sleep(100);
+                lift.setPower(0);
+            }
+            if (gamepad1.a) {
+                telemetry.addLine("Lift move down");
+                telemetry.update();
+                lift.setPower(.9);
+                sleep(100);
+                lift.setPower(0);
+            }
+            if (gamepad1.b) {
+                telemetry.addLine("Shoot plane");
+                telemetry.update();
+                plane.setPosition(0.6);
+                sleep(2000);
+                plane.setPosition(0.0);
+            }
+            if (!buttonPressed) {
+                if (gamepad2.left_stick_y > 0) {
+                    currentArmPosition += 0.01; // increase by a small step
+                    if (currentArmPosition > 0.55) currentArmPosition = 0.55;
+                } else if (gamepad2.left_stick_y < 0) {
+                    currentArmPosition -= 0.01; // decrease by a small steps
+                    if (currentArmPosition < 0) currentArmPosition = 0;
+                }
+                if (gamepad2.right_stick_y < 0) {
+                    currentElbowPosition += 0.01; // increase by a small step
+                    if (currentElbowPosition > 0.7) currentElbowPosition = 0.7;
+                } else if (gamepad2.right_stick_y > 0) {
+                    currentElbowPosition -= 0.01; // decrease by a small steps
+                    if (currentElbowPosition < 0) currentElbowPosition = 0;
+                }
+
+                moveServo(armServo, currentArmPosition, 20);
+                moveServo(elbowServo, currentElbowPosition, 10);
+            } else {
+                moveServo(armServo, servoSettings.getArmPos(), 20);
+                moveServo(elbowServo, servoSettings.getElbowPos(), 10);
+            }
+            if (gamepad2.left_trigger > 0) {claw1.setPosition(0.12);} //grab claw
+            if (gamepad2.right_trigger > 0) {claw1.setPosition(0.00);}//drop
+
+            moveBot(-gamepad1.left_stick_y, (gamepad1.right_stick_x), gamepad1.left_stick_x);
+
+        }
     }
     private boolean isButtonPressed(String button) {
         switch (button) {
@@ -222,9 +226,3 @@ public class DriveJava extends LinearOpMode {
         }
     }
 }
-
-
-
-
-
-

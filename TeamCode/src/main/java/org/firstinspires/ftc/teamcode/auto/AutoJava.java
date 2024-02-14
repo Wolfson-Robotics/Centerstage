@@ -372,6 +372,12 @@ public abstract class AutoJava extends LinearOpMode {
         elbowServo.setPosition(0.32485);
     }
 
+    // Lowers the arm so that the robot can move under the truss
+    protected void trussArm() {
+        armServo.setPosition(0.4927);
+        elbowServo.setPosition(0.5283);
+    }
+
     protected void restArm() {
         armServo.setPosition(0.4927);
         elbowServo.setPosition(0.50);

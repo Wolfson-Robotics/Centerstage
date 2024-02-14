@@ -68,7 +68,6 @@ public class AutoInstructionTextSerializer {
                 builtInstructions.append("\n");
                 continue;
             }
-            // TODO: (reflection?) support for any motor/servo methods
             switch (operationName) {
                 case "setPosition":
                     builtInstructions.append(operationArgs.get(0) + period + "setPosition" + openParenthesis + operationArgs.get(1) + funcEnd);
