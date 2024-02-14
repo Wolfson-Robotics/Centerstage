@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.auto.instruct;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class AutoOperation {
@@ -14,7 +15,6 @@ public class AutoOperation {
     public String getOperationName() {
         return this.operationName;
     }
-
     public ArrayList<String> getOperationArgs() {
         return this.operationArgs;
     }
