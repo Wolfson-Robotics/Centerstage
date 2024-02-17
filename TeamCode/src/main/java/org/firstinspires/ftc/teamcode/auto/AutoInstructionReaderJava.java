@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionConsta
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
+import org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionConstants;
 import org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionReader;
 import org.firstinspires.ftc.teamcode.auto.instruct.AutoOperation;
 
@@ -35,7 +36,7 @@ public class AutoInstructionReaderJava extends AutoJava {
         telemetry.update();
         try {
 
-            AutoInstructionReader reader = new AutoInstructionReader("/sdcard/autonomous/auto_instruct.txt");
+            AutoInstructionReader reader = new AutoInstructionReader(AutoInstructionConstants.autoInstructPath);
 
             AutoOperation autoOperation;
             boolean skipOperations = false;

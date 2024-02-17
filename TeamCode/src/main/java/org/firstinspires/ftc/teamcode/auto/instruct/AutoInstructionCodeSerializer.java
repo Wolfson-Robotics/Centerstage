@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.auto.instruct;
 
 import static org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionConstants.*;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -35,12 +37,23 @@ public class AutoInstructionCodeSerializer {
 
 
         LineNumberReader reader = new LineNumberReader(new FileReader(getInput("Input path of file:")));
-        StringBuilder builtInstructions = new StringBuilder("");
+        String builtInstructions = AutoInstructionCodeSerializer.serialize(reader);
 
         System.out.println("\n\n\nBEGIN WRITING\n\n\n");
+        System.out.println(builtInstructions);
+        System.out.println("\n\n\nEND WRITING\n\n\n");
+
+        main(args);
+    }
+
+
+
+    public static String serialize(BufferedReader codeInput) throws IOException {
+
+        StringBuilder builtInstructions = new StringBuilder("");
 
         String rawLine = "";
-        while ((rawLine = reader.readLine()) != null) {
+        while ((rawLine = codeInput.readLine()) != null) {
 
             String filteredLine = rawLine.replaceAll("\\r|\\n", "").trim();
             ArrayList<String> currBuiltInstruction = new ArrayList<>();
@@ -110,12 +123,14 @@ public class AutoInstructionCodeSerializer {
 
 
         }
-        reader.close();
+        codeInput.close();
 
+        return builtInstructions.toString();
 
-        System.out.println(builtInstructions.toString());
-        System.out.println("\n\n\nEND WRITING\n\n\n");
-
-        main(args);
     }
+
+    public static String serialize(String codeInput) throws IOException {
+        return AutoInstructionCodeSerializer.serialize(new BufferedReader(new StringReader(codeInput)));
+    }
+
 }

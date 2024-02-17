@@ -41,6 +41,10 @@ public class AutoInstructionConstants {
 
 
 
+    public static final String autoInstructPath = "/sdcard/autonomous/auto_instruct.txt";
+
+
+
 
 
     public static final String joinArgsText(ArrayList<String> operationArgs) {
