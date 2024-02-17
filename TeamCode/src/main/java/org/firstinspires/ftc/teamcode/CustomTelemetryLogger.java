@@ -6,18 +6,16 @@ import java.util.Date;
 import java.io.File;
 
 public class CustomTelemetryLogger {
-    private static FileWriter fileWriter;
+
+    private FileWriter fileWriter;
 
     public CustomTelemetryLogger(String filePath) throws IOException {
-        File file = new File(filePath);
-        if (fileWriter == null)
-            fileWriter = new FileWriter(filePath, true); // true for append mode
+        File logFile = new File(filePath);
         try {
-            if (!file.exists()) {
-                file.createNewFile();
+            if (!logFile.exists()) {
+                logFile.createNewFile();
             }
-            // Create a FileWriter to write to the file
-            fileWriter = new FileWriter(file, true);
+            this.fileWriter = new FileWriter(logFile, true);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -25,9 +23,8 @@ public class CustomTelemetryLogger {
 
     public synchronized void logData(String data) {
         try {
-            // Write data to the file
-            fileWriter.write(data);
-            fileWriter.flush(); // Flush the writer to ensure data is written immediately
+            this.fileWriter.write(data);
+            this.fileWriter.flush(); // Flush the writer to ensure data is written immediately
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,10 +32,7 @@ public class CustomTelemetryLogger {
 
     public void close() {
         try {
-            // Close the FileWriter when done
-            if (fileWriter != null) {
-                fileWriter.close();
-            }
+            this.fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

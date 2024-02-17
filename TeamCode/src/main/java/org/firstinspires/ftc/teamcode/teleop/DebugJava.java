@@ -7,8 +7,9 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.CustomTelemetryLogger;
+import org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionCodeSerializer;
+import org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionConstants;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -35,6 +36,7 @@ public class DebugJava extends LinearOpMode {
     private ServoSettings servoSettings = new ServoSettings();
     private Map<String, ServoSettings> servoPositions = new HashMap<>();
     private CustomTelemetryLogger logger;
+    private CustomTelemetryLogger textOutputLogger;
 
 
     private boolean buttonPressed = false;
@@ -112,9 +114,11 @@ public class DebugJava extends LinearOpMode {
             waitForStart();
             if (debug) {
                 String logFilePath = String.format("/sdcard/Logs/"+ new Date().getHours() + "_" + new Date().getMinutes() + "_" + new Date().getSeconds() +".txt", Environment.getExternalStorageDirectory().getAbsolutePath());
-                String fileName = "/sdcard/Logs/" + new Date().toString() + ".txt";
                 logger = new CustomTelemetryLogger(logFilePath);
+                textOutputLogger = new CustomTelemetryLogger(AutoInstructionConstants.autoInstructPath);
                 telemetry.addData("name of file: ", logFilePath);
+                telemetry.addData("name of auto instruct file: ", AutoInstructionConstants.autoInstructPath);
+                telemetry.update();
 
             }
             while (opModeIsActive()) {
@@ -157,7 +161,6 @@ public class DebugJava extends LinearOpMode {
                             case 2:
                                 telemetry.addData("horz", (rightDif > 0));
                                 telemetry.update();
-
                                 moves += "moveBot(" + ((Math.abs(rightDif))/intCon) + ",0,0," + ((rightDif > 0) ? -1 : 1) + ");\nsleep(500);\n";
                                 break;
                             case 3:
@@ -192,6 +195,7 @@ public class DebugJava extends LinearOpMode {
                     {
                         depadPressed = true;
                         logger.logData(moves);
+                        textOutputLogger.logData("\n\n" + AutoInstructionCodeSerializer.serialize(moves) + "\n\n");
                         telemetry.addData("logged moves: ", moves);
                         telemetry.update();
 
@@ -349,8 +353,12 @@ public class DebugJava extends LinearOpMode {
             if (logger != null) {
                 logger.close();
             }
+            if (textOutputLogger != null) {
+                textOutputLogger.close();
+            }
         }
-        if (debug && logger != null) {
+        if (debug && logger != null && textOutputLogger != null) {
+            textOutputLogger.close();
             logger.close();
             telemetry.addLine("logger close");
             telemetry.update();
