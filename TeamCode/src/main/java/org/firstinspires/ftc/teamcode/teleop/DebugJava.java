@@ -217,19 +217,24 @@ public class DebugJava extends LinearOpMode {
                         if(tapePlace == 1) {
                             lowerArm();
                             moves += "lowerArm();\n";
+                            telemetry.addLine("lower pickup");
+                            telemetry.update();
                         }
                         if(tapePlace == 2) {
                             tapePlace();
+                            telemetry.addLine("tape pickup");
+                            telemetry.update();
                             moves += "tapePlace();\n";
                         }
                         if(tapePlace == 3) {
                             backdropPlace();
                             moves += "backdropPlace();\n";
+                            telemetry.addLine("drop pickup");
+                            telemetry.update();
                             tapePlace = 0;
                         }
                         clawChanged = 0;
-                        telemetry.addLine("drop pickup");
-                        telemetry.update();
+
 
                     }
                     if(gamepad1.right_stick_x != 0)
