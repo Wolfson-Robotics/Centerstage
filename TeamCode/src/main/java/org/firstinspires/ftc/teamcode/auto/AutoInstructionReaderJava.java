@@ -99,6 +99,24 @@ public class AutoInstructionReaderJava extends AutoJava {
                         }
                         break;
 
+                    case "setPower":
+                        Double powerFac = Double.parseDouble(operationArgs.get(1));
+                        switch(operationArgs.get(0)) {
+                            case "right_drive1":
+                                right_drive1.setPower(powerFac);
+                                break;
+                            case "right_drive2":
+                                right_drive2.setPower(powerFac);
+                                break;
+                            case "left_drive1":
+                                left_drive1.setPower(powerFac);
+                                break;
+                            case "left_drive2":
+                                left_drive2.setPower(powerFac);
+                                break;
+                        }
+                        break;
+
 
                     case "restArm":
                         restArm();

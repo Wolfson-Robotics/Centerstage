@@ -215,18 +215,21 @@ public class DebugJava extends LinearOpMode {
                         depadPressed = true;
                         tapePlace++;
                         if(tapePlace == 1) {
+                            buttonPressed = true;
                             lowerArm();
                             moves += "lowerArm();\n";
                             telemetry.addLine("lower pickup");
                             telemetry.update();
                         }
                         if(tapePlace == 2) {
+                            buttonPressed = true;
                             tapePlace();
                             telemetry.addLine("tape pickup");
                             telemetry.update();
                             moves += "tapePlace();\n";
                         }
                         if(tapePlace == 3) {
+                            buttonPressed = true;
                             backdropPlace();
                             moves += "backdropPlace();\n";
                             telemetry.addLine("drop pickup");
