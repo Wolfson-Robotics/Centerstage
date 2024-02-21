@@ -103,16 +103,17 @@ public class AutoInstructionReader {
                 break;
 
             }
+            case "setPower":
             case "setPosition": {
 
                 if (rawOperationArgs.size() != 2) {
-                    throw new IOException("Incorrect number of parameters at setPosition call at line " + this.getLineNumber());
+                    throw new IOException("Incorrect number of parameters at " + operationName + " call at line " + this.getLineNumber());
                 }
                 if (!servoExists(rawOperationArgs.get(0))) {
-                    throw new IOException("Servo " + rawOperationArgs.get(0) + " for setPosition call does not exist at line " + this.getLineNumber());
+                    throw new IOException("Servo " + rawOperationArgs.get(0) + " for " + operationName + " call does not exist at line " + this.getLineNumber());
                 }
                 if (!isDouble(rawOperationArgs.get(1))) {
-                    throw new IOException("Servo pos " + rawOperationArgs.get(1) + " is not a valid double for setPosition call at line " + this.getLineNumber());
+                    throw new IOException("Servo pos " + rawOperationArgs.get(1) + " is not a valid double for " + operationName + " call at line " + this.getLineNumber());
                 }
                 operationArgs.add(rawOperationArgs.get(0));
                 operationArgs.add(rawOperationArgs.get(1));

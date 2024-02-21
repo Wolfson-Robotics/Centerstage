@@ -15,7 +15,7 @@ public class CustomTelemetryLogger {
             if (!logFile.exists()) {
                 logFile.createNewFile();
             }
-            this.fileWriter = new FileWriter(logFile, true);
+            this.fileWriter = new FileWriter(logFile, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
