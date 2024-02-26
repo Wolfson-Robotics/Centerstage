@@ -43,7 +43,10 @@ public class AutoInstructionReader {
         }
 
 
-        String actualData = rawLine.replaceAll("\\r|\\n", "").trim();
+        String actualData = rawLine
+                .replaceAll("\\r|\\n", "")
+                .replaceAll((openParenthesisRegex + "|" + closeParenthesisRegex + "|" + semicolonRegex), "")
+                .trim();
         ArrayList<String> rawOperationArgs = new ArrayList<>(Arrays.asList(actualData.split(argJoinerRegex)));
 
         String originalOperationName = rawOperationArgs.get(0);
@@ -57,8 +60,8 @@ public class AutoInstructionReader {
 
 
         rawOperationArgs = new ArrayList<>(rawOperationArgs.stream()
-                .filter(arg -> arg.trim().length() > 0)
                 .map(arg -> arg.trim())
+                .filter(arg -> arg.length() > 0)
                 .collect(Collectors.toCollection(ArrayList::new)));
 
 
@@ -120,6 +123,18 @@ public class AutoInstructionReader {
                 break;
 
             }
+            case "powerFactor": {
+
+                if (rawOperationArgs.size() != 1) {
+                    throw new IOException("Incorrect number of parameters at " + operationName + " assignment at line " + this.getLineNumber());
+                }
+                if (!isDouble(rawOperationArgs.get(0))) {
+                    throw new IOException(operationName + " assigned value " + rawOperationArgs.get(0) + " is not a valid double at line " + this.getLineNumber());
+                }
+                operationArgs.add(rawOperationArgs.get(0));
+                break;
+
+            }
 
             // We still want the whole text on the line of the comment
             // So we first append the "operation name" (in this case the comment indicator that
@@ -129,6 +144,7 @@ public class AutoInstructionReader {
                 rawOperationArgs.add(0, originalOperationName);
                 operationArgs = rawOperationArgs;
                 break;
+            case "":
             case multiCommentBegin:
             case multiCommentEnd:
             case stopMarker:

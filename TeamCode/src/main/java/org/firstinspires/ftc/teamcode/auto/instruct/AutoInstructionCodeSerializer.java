@@ -2,8 +2,12 @@ package org.firstinspires.ftc.teamcode.auto.instruct;
 
 import static org.firstinspires.ftc.teamcode.auto.instruct.AutoInstructionConstants.*;
 
+import org.firstinspires.ftc.teamcode.CustomTelemetryLogger;
+
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.StringReader;
@@ -34,17 +38,26 @@ public class AutoInstructionCodeSerializer {
 
     // Be sure to SET THE RUN CONFIGURATION BACK TO TEAMCODE WHEN REUPLOADING THE ACTUAL CODE.
     public static void main(String[] args) throws IOException {
+        mainPipeline(getInput("Write outputs to input files?(Y/N):").toLowerCase().equals("y"));
+    }
 
-
-        LineNumberReader reader = new LineNumberReader(new FileReader(getInput("Input path of file:")));
+    private static void mainPipeline(boolean writeSerialized) throws IOException {
+        String inputPath = getInput("Input path of file:");
+        LineNumberReader reader = new LineNumberReader(new FileReader(inputPath));
         String builtInstructions = AutoInstructionCodeSerializer.serialize(reader);
 
         System.out.println("\n\n\nBEGIN WRITING\n\n\n");
         System.out.println(builtInstructions);
         System.out.println("\n\n\nEND WRITING\n\n\n");
+        if (writeSerialized) {
+            CustomTelemetryLogger fileLogger = new CustomTelemetryLogger(inputPath);
+            fileLogger.logData(builtInstructions);
+            fileLogger.close();
+        }
 
-        main(args);
+        mainPipeline(writeSerialized);
     }
+
 
 
 

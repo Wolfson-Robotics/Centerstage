@@ -59,6 +59,9 @@ public class AutoInstructionReaderJava extends AutoJava {
                         skipCurrOperation = true;
                         break;
                     case stopMarker:
+                        if (skipCurrOperation || skipOperations) {
+                            break;
+                        }
                         return;
                 }
                 if (skipCurrOperation || skipOperations) {
@@ -117,6 +120,14 @@ public class AutoInstructionReaderJava extends AutoJava {
                         }
                         break;
 
+                    case "powerFactor":
+                        telemetry.addLine("CHANGING POWER FACTOR TO " + operationArgs.get(0));
+                        telemetry.update();
+                        this.powerFactor = Double.parseDouble(operationArgs.get(0));
+                        telemetry.addLine(String.valueOf(this.powerFactor));
+                        telemetry.update();
+                        break;
+
 
                     case "restArm":
                         restArm();
@@ -148,6 +159,7 @@ public class AutoInstructionReaderJava extends AutoJava {
 
         } catch (IOException e) {
             telemetry.addLine("An error occurred:");
+            telemetry.addLine(e.getMessage());
             telemetry.addLine(Stream.of(e.getStackTrace())
                             .map(String::valueOf)
                             .collect(Collectors.joining("\n")));
