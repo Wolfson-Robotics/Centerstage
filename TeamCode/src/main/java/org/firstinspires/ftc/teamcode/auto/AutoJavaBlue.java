@@ -42,7 +42,7 @@ public class AutoJavaBlue extends AutoJava {
                 sleep(500);
 // 39 inches input
 // 27 inches input
-// -5.5 inches input (80.824-16.014)
+// -5.5 inches input 80.824-16.014
                 moveBot(47.136, 1, 0, 0);
                 sleep(500);
 // 8 inches input
@@ -110,7 +110,7 @@ moveBot(181.72918181076517, 1, 0, 0);
 
             case RIGHT: {
 
-// 13.5 inches input PLUS 7.5 inches input (31.04 + 22.694)
+// 13.5 inches input PLUS 7.5 inches input 31.04 + 22.694
                 moveBot(57.934, 0, 0, 1);
                 sleep(500);
 // 29 inches input

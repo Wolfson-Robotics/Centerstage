@@ -30,7 +30,7 @@ public class AutoJavaRed extends AutoJava {
 
             case LEFT: {
 
-// 13.5 inches input PLUS 7.5 inches input (31.04 + 22.694)
+// 13.5 inches input PLUS 7.5 inches input 31.04 + 22.694
                 moveBot(57.934, 0, 0, -1);
                 sleep(500);
 // 29 inches input
@@ -80,42 +80,33 @@ sleep(500);
                 moveBot(26.010418834201573, 1, 0, 0);
                 sleep(500);
                 backdropPlace();
-                sleep(500);
                 break;
 
             }
 
             case CENTER: {
 
-                moveBot(10, 0, 0, -1);
-                sleep(400);
-// 53.625 inches input
-                moveBot(20, 1, 0, 0);
-                sleep(500);
                 lowerArm();
+                moveBot(16.38541803211817, 0, 0, -1);
                 sleep(500);
-                moveBot(90, 1, 0, 0);
-                sleep(1000);
-                moveBot(30, -1, 0, 0);
+                moveBot(131.54167762847314, 1, 0, 0);
+                sleep(500);
+                moveBot(50.30208752517397, -1, 0, 0);
                 sleep(500);
                 tapePlace();
+                turnBot(112);
                 sleep(1000);
-                turnBot(116);
-                sleep(1000);
-                moveBot(25.3229187769099, -1, 0, 0);
-                sleep(1000);
-                moveBot(74.25000618750052, 0, 0, 1);
-                sleep(1000);
-                trussArm();
-                sleep(1000);
-                moveBot(80.32292336024362, 1, 0, 0);
-                sleep(1000);
-                moveBot(186.54168221180686, 1, 0, 0);
-                sleep(1000);
-                moveBot(71.50000595833383, 0, 0, -1);
-                sleep(1000);
-                moveBot(47.895837324653115, 1, 0, 0);
-                sleep(1000);
+                moveBot(282.21877351823116, 1, 0, 0);
+                sleep(500);
+                moveBot(9.6250008020834, 0, 0, 1);
+                sleep(500);
+                backdropPlace();
+                moveBot(43.08333692361141, -1, 0, 0);
+                sleep(500);
+                moveBot(85.25000710416727, 0, 0, 1);
+                sleep(500);
+                moveBot(74.36458953038246, 1, 0, 0);
+                sleep(500);
                 break;
 
             }
@@ -134,7 +125,7 @@ sleep(500);
                 sleep(500);
 // 39 inches input
 // 27 inches input
-// -5.5 inches input (80.824-16.014)
+// -5.5 inches input 80.824-16.014
                 moveBot(47.136, 1, 0, 0);
                 sleep(500);
 // 8 inches input
