@@ -3,11 +3,11 @@ package org.firstinspires.ftc.teamcode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name = "AutoJavaRedBackdrop", group = "Auto")
-public class AutoJavaRedBackdrop extends AutoJava {
+@Autonomous(name = "AutoJavaRedFrontBackdrop", group = "Auto")
+public class AutoJavaRedFrontBackdrop extends AutoJava {
 
 
-    public AutoJavaRedBackdrop() {
+    public AutoJavaRedFrontBackdrop() {
         super(false);
     }
 
@@ -31,8 +31,10 @@ public class AutoJavaRedBackdrop extends AutoJava {
             case LEFT: {
 
                 // 27 inches input
-                moveBot(87.824, 0, 0, 1);
-                sleep(1500);
+                // offset of 23.0312
+//                moveBot(87.824, 0, 0, 1);
+                moveBot(64.7928, 0, 0, 1);
+                sleep(500);
                 // 45 inches input
                 moveBot(114.944, 1, 0, 0);
                 sleep(500);
@@ -135,7 +137,7 @@ public class AutoJavaRedBackdrop extends AutoJava {
                 // 14.5 inches input
                 moveBot(65.074, 0, 0, 1);
                 // 9 inches input
-                moveBot(36.704, 1, 0, 0);
+                moveBot(30.704, 1, 0, 0);
                 break;
 
             }

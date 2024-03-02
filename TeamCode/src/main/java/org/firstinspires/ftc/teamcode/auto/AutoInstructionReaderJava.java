@@ -144,6 +144,9 @@ public class AutoInstructionReaderJava extends AutoJava {
                     case "backdropPlace":
                         backdropPlace();
                         break;
+                    case "backdropPlaceHigh":
+                        backdropPlaceHigh();
+                        break;
 
                     default:
                         finalOperationArgs = operationArgs;

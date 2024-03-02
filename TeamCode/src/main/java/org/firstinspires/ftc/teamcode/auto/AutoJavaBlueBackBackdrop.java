@@ -2,14 +2,13 @@ package org.firstinspires.ftc.teamcode.auto;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "AutoJavaBlue", group = "Auto")
-public class AutoJavaBlue extends AutoJava {
+@Autonomous(name = "AutoJavaBlueBackBackdrop", group = "Auto")
+public class AutoJavaBlueBackBackdrop extends AutoJava {
 
 
-    public AutoJavaBlue() {
-        super(true, false);
+    public AutoJavaBlueBackBackdrop() {
+        super(true);
     }
 
 
@@ -31,8 +30,9 @@ public class AutoJavaBlue extends AutoJava {
             case LEFT: {
 
 // 27 inches input
-                moveBot(59.824, 0, 0, 1);
-                sleep(1000);
+//                moveBot(59.824, 0, 0, 1);
+                moveBot(29.459415, 0, 0, 1);
+                sleep(500);
 // 45 inches input
                 moveBot(96.944, 1, 0, 0);
                 sleep(500);
@@ -49,69 +49,93 @@ public class AutoJavaBlue extends AutoJava {
                 moveBot(14.364, -1, 0, 0);
                 sleep(500);
                 tapePlace();
-                sleep(1000);
+                sleep(500);
                 moveBot(27.041668920139077, -1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 moveBot(92.12500767708399, 0, 0, -1);
+                sleep(350);
                 trussArm();
-                sleep(1000);
+                sleep(350);
 /*
 moveBot(94.64584122048677, 1, 0, 0);
 sleep(1000);
 moveBot(181.72918181076517, 1, 0, 0);
 */
                 moveBot(276.37502303125194, 1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 moveBot(51.333337611111475, 0, 0, 1);
-                sleep(1000);
+                sleep(500);
                 moveBot(51.906254325521196, 1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 backdropPlace();
+                switch (this.parkDir) {
+                    case "leftPark":
+                        sleep(500);
+                        moveBot(6.645833887152825, -1, 0, 0);
+                        moveBot(95.39584099132009, 0, 0, 1);
+                        moveBot(40.67708672309056, 1, 0, 0);
+                        break;
+                    case "rightPark":
+                        sleep(500);
+                        moveBot(6.645833887152825, -1, 0, 0);
+                        moveBot(79.06250658854222, 0, 0, -1);
+                        moveBot(44.34375369541281, 1, 0, 0);
+                        break;
+                }
                 break;
 
             }
-
 
             case CENTER: {
 
-                moveBot(10, 0, 0, 1);
-                sleep(400);
-// 53.625 inches input
-                moveBot(20, 1, 0, 0);
-                sleep(500);
                 lowerArm();
+//                moveBot(16.38541803211817, 0, 0, 1);
+                moveBot(20.054169696788183, 0, 0, -1);
                 sleep(500);
-                moveBot(90, 1, 0, 0);
-                sleep(1000);
-                moveBot(30, -1, 0, 0);
+                moveBot(131.54167762847314, 1, 0, 0);
+                sleep(500);
+                moveBot(50.30208752517397, -1, 0, 0);
                 sleep(500);
                 tapePlace();
-                sleep(1000);
-                turnBot(-116);
-                sleep(1000);
-                moveBot(25.3229187769099, -1, 0, 0);
-                sleep(1000);
-                moveBot(74.25000618750052, 0, 0, -1);
-                trussArm();
-                sleep(1000);
-                moveBot(80.32292336024362, 1, 0, 0);
-                sleep(1000);
-                moveBot(186.54168221180686, 1, 0, 0);
-                sleep(1000);
-                moveBot(71.50000595833383, 0, 0, 1);
-                sleep(1000);
-                moveBot(47.895837324653115, 1, 0, 0);
-                sleep(1000);
+                sleep(500);
+                turnBot(-112);
+                sleep(500);
+                moveBot(282.21877351823116, 1, 0, 0);
+                sleep(500);
+//moveBot 9.6250008020834 0 0 1
+//moveBot 71.50000595833383 0 0 -1
+//sleep 500
+//moveBot 51.906254325521196 1 0 0
+                sleep(500);
                 backdropPlace();
+                switch(this.parkDir) {
+                    case "leftPark":
+                        sleep(500);
+                        moveBot(6.645833887152825, -1, 0, 0);
+                        sleep(500);
+                        moveBot(86.02084041840338, 0, 0, 1);
+                        sleep(500);
+                        moveBot(44.34375369541281, 1, 0, 0);
+                        break;
+                    case "rightPark":
+                        sleep(500);
+                        moveBot(43.08333692361141, -1, 0, 0);
+                        sleep(500);
+                        moveBot(85.25000710416727, 0, 0, -1);
+                        sleep(500);
+                        moveBot(74.36458953038246, 1, 0, 0);
+                        sleep(500);
+                        break;
+                }
                 break;
 
             }
-
 
             case RIGHT: {
 
 // 13.5 inches input PLUS 7.5 inches input 31.04 + 22.694
-                moveBot(57.934, 0, 0, 1);
+//                moveBot(57.934, 0, 0, 1);
+                moveBot(27.569415, 0, 0, 1);
                 sleep(500);
 // 29 inches input
                 moveBot(24, 1, 0, 0);
@@ -150,16 +174,31 @@ sleep(500);
                 sleep(500);
                 trussArm();
                 sleep(500);
+                sleep(500);
                 moveBot(97.85417482118125, 1, 0, 0);
                 sleep(500);
                 moveBot(204.41668370139033, 1, 0, 0);
                 sleep(500);
-                moveBot(97.39584144965346, 0, 0, 1);
+                moveBot(103.39584144965346, 0, 0, 1);
                 sleep(500);
                 moveBot(26.010418834201573, 1, 0, 0);
                 sleep(500);
                 backdropPlace();
-                sleep(500);
+                switch (this.parkDir) {
+                    case "leftPark":
+                        moveBot(6.645833887152825, -1, 0, 0);
+                        sleep(500);
+                        moveBot(59.12500492708375, 0, 0, 1);
+                        sleep(500);
+                        moveBot(37.166670180555855, 1, 0, 0);
+                        break;
+                    case "rightPark":
+                        sleep(500);
+                        moveBot(6.645833887152825, -1, 0, 0);
+                        moveBot(116.22917585243133, 0, 0, -1);
+                        moveBot(36.55208637934054, 1, 0, 0);
+                        break;
+                }
                 break;
 
             }
