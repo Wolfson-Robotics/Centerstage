@@ -234,7 +234,13 @@ public class DebugJava extends LinearOpMode {
                             moves += "backdropPlace();\n";
                             telemetry.addLine("drop pickup");
                             telemetry.update();
-                            tapePlace = 0;
+                        }
+                        if (tapePlace == 4) {
+                            buttonPressed = true;
+                            backdropPlaceHigh();
+                            moves += "backdropPlaceHigh();\n";
+                            telemetry.addLine("drop high pickup");
+                            telemetry.update();
                         }
                         clawChanged = 0;
 
@@ -444,6 +450,15 @@ public class DebugJava extends LinearOpMode {
     protected void backdropPlace() {
         claw1.setPosition(0);
         sleep(1000);
+        armServo.setPosition(0.4927);
+        elbowServo.setPosition(0.5483);
+    }
+    protected void backdropPlaceHigh() {
+        armServo.setPosition(0.005);
+        elbowServo.setPosition(0.0622);
+        sleep(750);
+        claw1.setPosition(0);
+        sleep(750);
         armServo.setPosition(0.4927);
         elbowServo.setPosition(0.5483);
     }

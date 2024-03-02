@@ -46,6 +46,7 @@ public abstract class AutoJava extends LinearOpMode {
     protected double powerFactor = 1;
     protected boolean blue = false;
     protected boolean brake = false;
+    protected String parkDir = "noPark";
 
     protected AutoJava(boolean blue) {
         this.blue = blue;
@@ -326,6 +327,16 @@ public abstract class AutoJava extends LinearOpMode {
         initCamera();
 
         while (!isStarted()) {
+            if (gamepad1.dpad_down) {
+                this.parkDir = "noPark";
+            }
+            if (gamepad1.dpad_left) {
+                this.parkDir = "leftPark";
+            }
+            if (gamepad1.dpad_right) {
+                this.parkDir = "rightPark";
+            }
+            telemetry.addData("Parking direction:", this.parkDir);
             telemetry.addData("White percent of LCR mats:", pixelDetection.getLeftPercent() + " "
                     + pixelDetection.getCenterPercent() + " " + pixelDetection.getRightPercent());
             telemetry.addData("ROTATION1: ", pixelDetection.getPosition());
@@ -344,17 +355,17 @@ public abstract class AutoJava extends LinearOpMode {
     // Common functions for autonomous instructions
     protected void tapePlace() {
         restArm();
-        sleep(500);
+        sleep(750);
         armServo.setPosition(0.55);
         elbowServo.setPosition(0.27);
-        sleep(500);
+        sleep(750);
         claw1.setPosition(0.0);
-        sleep(500);
+        sleep(750);
         armServo.setPosition(0.55);
         elbowServo.setPosition(0.3075);
-        sleep(500);
+        sleep(750);
         claw1.setPosition(0.12);
-        sleep(650);
+        sleep(750);
         restArm();
     }
 

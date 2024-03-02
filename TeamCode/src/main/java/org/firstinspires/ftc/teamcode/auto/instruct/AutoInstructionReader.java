@@ -153,6 +153,7 @@ public class AutoInstructionReader {
             case "lowerArm":
             case "tapePlace":
             case "backdropPlace":
+            case "backdropPlaceHigh":
                 break;
             default:
                 throw new IOException("Unknown operation " + operationName + " with specific provided arguments at line " + this.getLineNumber());

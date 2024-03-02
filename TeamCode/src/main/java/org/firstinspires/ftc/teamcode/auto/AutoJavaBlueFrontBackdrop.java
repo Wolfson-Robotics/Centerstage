@@ -4,11 +4,11 @@ package org.firstinspires.ftc.teamcode.auto;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Autonomous(name = "AutoJavaBlueBackdrop", group = "Auto")
-public class AutoJavaBlueBackdrop extends AutoJava {
+@Autonomous(name = "AutoJavaBlueFrontBackdrop", group = "Auto")
+public class AutoJavaBlueFrontBackdrop extends AutoJava {
 
 
-    public AutoJavaBlueBackdrop() {
+    public AutoJavaBlueFrontBackdrop() {
         super(true, false);
     }
 
@@ -31,22 +31,22 @@ public class AutoJavaBlueBackdrop extends AutoJava {
             case LEFT: {
 
                 moveBot(47, 0, 0, -1);
-                sleep(1000);
+                sleep(500);
                 lowerArm();
-                sleep(1000);
+                sleep(500);
                 moveBot(43, 1, 0, 0);
-                sleep(850);
+                sleep(750);
                 moveBot(3, -1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 tapePlace();
-                sleep(1000);
+                sleep(500);
                 turnBot(-100);
                 moveBot(80, 1, 0, 0);
                 //                    moveBot(5, 0, 0, 1);
                 moveBot(5, 1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 backdropPlace();
-                sleep(1000);
+                sleep(500);
                 moveBot(5, -1, 0, 0);
                 moveBot(59.5, 0, 0, -1);
                 moveBot(12.45, 1, 0, 0);
@@ -59,25 +59,25 @@ public class AutoJavaBlueBackdrop extends AutoJava {
 
                 moveBot(23, 0, 0, -1);
                 moveBot(20, 1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 lowerArm();
-                sleep(1000);
+                sleep(500);
                 moveBot(67, 1, 0, 0);
-                sleep(1150);
+                sleep(500);
                 moveBot(20, -1, 0, 0);
-                sleep(1150);
+                sleep(500);
                 tapePlace();
-                sleep(850);
+                sleep(500);
                 turnBot(-90);
-                sleep(850);
+                sleep(500);
                 moveBot(84, 1, 0, 0);
                 moveBot(15, 0, 0, 1);
                 sleep(500);
                 moveBot(15, 1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 //                    moveBot(10, 0, 0, -1);
                 backdropPlace();
-                sleep(1000);
+                sleep(500);
                 moveBot(5, -1, 0, 0);
                 moveBot(80, 0, 0, -1);
                 moveBot(18, 1, 0, 0);
@@ -92,23 +92,23 @@ public class AutoJavaBlueBackdrop extends AutoJava {
                 left_drive2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
                 // 27 inches input
                 moveBot(87.824, 0, 0, -1);
-                sleep(1000);
+                sleep(500);
                 // 45 inches input
                 moveBot(114.944, 1, 0, 0);
                 sleep(500);
                 turnBot(120);
-                sleep(1000);
+                sleep(500);
                 lowerArm();
-                sleep(1000);
+                sleep(500);
                 // 39 inches input
                 // 27 inches input
                 moveBot(87.824, 1, 0, 0);
                 sleep(500);
                 // 8 inches input
                 moveBot(24.364, -1, 0, 0);
-                sleep(1000);
+                sleep(500);
                 tapePlace();
-                sleep(1000);
+                sleep(500);
                 turnBot(230);
                 sleep(500);
                 // 30 inches input
@@ -119,7 +119,7 @@ public class AutoJavaBlueBackdrop extends AutoJava {
                 moveBot(8.45, 0, 0, 1);
                 sleep(500);
                 backdropPlace();
-                sleep(1000);
+                sleep(500);
                 moveBot(5, -1, 0, 0);
                 sleep(500);
                 // 42 inches input
