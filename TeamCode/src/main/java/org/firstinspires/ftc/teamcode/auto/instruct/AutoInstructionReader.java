@@ -45,7 +45,7 @@ public class AutoInstructionReader {
 
         String actualData = rawLine
                 .replaceAll("\\r|\\n", "")
-                .replaceAll((openParenthesisRegex + "|" + closeParenthesisRegex + "|" + semicolonRegex), "")
+                .replaceAll((openParenthesisRegex + "|" + closeParenthesisRegex + "|" + semicolonRegex), " ")
                 .trim();
         ArrayList<String> rawOperationArgs = new ArrayList<>(Arrays.asList(actualData.split(argJoinerRegex)));
 

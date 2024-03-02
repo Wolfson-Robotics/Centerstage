@@ -44,10 +44,10 @@ public class AutoJavaRedFrontBackdrop extends AutoJava {
                 sleep(500);
                 // 39 inches input
                 // 27 inches input
-                moveBot(80.824, 1, 0, 0);
+                moveBot(75.824, 1, 0, 0);
                 sleep(500);
                 // 8 inches input
-                moveBot(14.364, -1, 0, 0);
+                moveBot(22.664, -1, 0, 0);
                 sleep(500);
                 tapePlace();
                 sleep(500);
@@ -58,8 +58,9 @@ public class AutoJavaRedFrontBackdrop extends AutoJava {
                 sleep(500);
                 //moveBot 16 0 0 -1
                 //moveBot 8 0 0 -1
-                moveBot(8.95, 0, 0, 1);
-                sleep(500);
+//                moveBot(8.95, 0, 0, 1);
+                moveBot(2.45, 0, 0, -1);
+//                sleep(500);
                 moveBot(21, 1, 0, 0);
                 sleep(500);
                 backdropPlace();
@@ -128,7 +129,7 @@ public class AutoJavaRedFrontBackdrop extends AutoJava {
                 sleep(500);
                 // 25 inches input
                 moveBot(83.144, 1, 0, 0);
-                moveBot(11.675, 0, 0, -1);
+                moveBot(12.775, 0, 0, -1);
                 moveBot(10, 1, 0, 0);
                 sleep(1000);
                 backdropPlace();

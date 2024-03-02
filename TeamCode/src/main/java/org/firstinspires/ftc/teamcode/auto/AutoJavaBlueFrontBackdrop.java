@@ -71,16 +71,24 @@ public class AutoJavaBlueFrontBackdrop extends AutoJava {
                 turnBot(-90);
                 sleep(500);
                 moveBot(84, 1, 0, 0);
-                moveBot(15, 0, 0, 1);
+                moveBot(13.65, 0, 0, 1);
                 sleep(500);
                 moveBot(15, 1, 0, 0);
                 sleep(500);
                 //                    moveBot(10, 0, 0, -1);
                 backdropPlace();
                 sleep(500);
+                /*
                 moveBot(5, -1, 0, 0);
                 moveBot(80, 0, 0, -1);
                 moveBot(18, 1, 0, 0);
+                 */
+                moveBot(5, -1, 0, 0);
+                sleep(500);
+                moveBot(67.25000710416727, 0, 0, -1);
+                sleep(500);
+                moveBot(12.45, 1, 0, 0);
+                sleep(500);
                 break;
 
             }
@@ -116,17 +124,22 @@ public class AutoJavaBlueFrontBackdrop extends AutoJava {
                 sleep(500);
                 //moveBot 12.45 0 0 1
                 //sleep 500
-                moveBot(8.45, 0, 0, 1);
+                moveBot(4.45, 0, 0, -1);
                 sleep(500);
                 backdropPlace();
                 sleep(500);
                 moveBot(5, -1, 0, 0);
                 sleep(500);
                 // 42 inches input
+                /*
                 moveBot(137.924, 0, 0, -1);
                 sleep(500);
                 // 9 inches input
                 moveBot(27.704, 1, 0, 0);
+                */
+                moveBot(6.645833887152825, -1, 0, 0);
+                moveBot(116.22917585243133, 0, 0, -1);
+                moveBot(36.55208637934054, 1, 0, 0);
                 break;
 
             }
